@@ -1,3 +1,10 @@
+/*
+ * @File: 
+ * @Brief: 
+ * @Version: 1.0.0
+ * @Author: xxx
+ * @Date: 2020-10-10 07:51:10
+ */
 
 function init_design() {
     //draw init windows
@@ -38,4 +45,11 @@ function init_design() {
     mull.end.x = 400;
     mull.end.y = 200;
     draw_hmullion(mull);
+
+    mull2 = new Mullion();
+    mull2.begin.x = 300;
+    mull2.begin.y = 300;
+    mull2.end.x = 300;
+    mull2.end.y = 500;
+    draw_vmullion(mull2);
 }

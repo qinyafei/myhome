@@ -70,15 +70,15 @@ function draw_vdimensioning(dimen) {
     draw_text(dimen.length, fromX, fromY - textlen);
 }
 
-
+/**
+ * 绘制横梃
+*/
 function draw_hmullion(mullion) {
     theta = 25;
     headlen = 10;
     textlen = 20;
 
     edge = 100;
-    left_edge = 0;
-    right_edge = 0;
 
     //向左箭头
     fromX = mullion.begin.x + edge;
@@ -94,8 +94,6 @@ function draw_hmullion(mullion) {
         topY = headlen * Math.sin(angle1),
         botX = headlen * Math.cos(angle2),
         botY = headlen * Math.sin(angle2);
-
-    left_edge = topX;
 
     var arrowX = toX + topX,
         arrowY = toY + topY;
@@ -122,8 +120,6 @@ function draw_hmullion(mullion) {
         botX = headlen * Math.cos(angle2),
         botY = headlen * Math.sin(angle2);
 
-    right_edge = topX;
-
     var arrowX = toX + topX,
         arrowY = toY + topY;
     line2 = draw_line(arrowX, arrowY, toX, toY);
@@ -137,5 +133,73 @@ function draw_hmullion(mullion) {
     line4 = draw_line(mullion.begin.x - topX, mullion.begin.y - botY, mullion.end.x + topX, mullion.begin.y - botY);
     zr.add(line4);
     line5 = draw_line(mullion.begin.x - topX, mullion.end.y + botY, mullion.end.x + topX, mullion.end.y + botY);
+    zr.add(line5);
+}
+
+
+/**
+ * 绘制竖梃
+*/
+function draw_vmullion(mullion) {
+    theta = 25;
+    headlen = 10;
+    textlen = 20;
+
+    edge = 100;
+
+    //向上箭头
+    fromX = mullion.begin.x;
+    fromY = mullion.begin.y + edge;
+    toX = mullion.begin.x;
+    toY = mullion.begin.y;
+
+    // 计算各角度和对应的P2,P3坐标
+    var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
+        angle1 = (angle + theta) * Math.PI / 180,
+        angle2 = (angle - theta) * Math.PI / 180,
+        topX = headlen * Math.cos(angle1),
+        topY = headlen * Math.sin(angle1),
+        botX = headlen * Math.cos(angle2),
+        botY = headlen * Math.sin(angle2);
+
+    var arrowX = toX + topX,
+        arrowY = toY + topY;
+    line2 = draw_line(arrowX, arrowY, toX, toY);
+    zr.add(line2);
+
+    arrowX = toX + botX;
+    arrowY = toY + botY;
+    line3 = draw_line(toX, toY, arrowX, arrowY);
+    zr.add(line3);
+
+
+    //画向右箭头
+    fromX = mullion.end.x;
+    fromY = mullion.end.y - edge;
+    toX = mullion.end.x;
+    toY = mullion.end.y;
+
+    var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
+        angle1 = (angle + theta) * Math.PI / 180,
+        angle2 = (angle - theta) * Math.PI / 180,
+        topX = headlen * Math.cos(angle1),
+        topY = headlen * Math.sin(angle1),
+        botX = headlen * Math.cos(angle2),
+        botY = headlen * Math.sin(angle2);
+
+    var arrowX = toX + topX,
+        arrowY = toY + topY;
+    line2 = draw_line(arrowX, arrowY, toX, toY);
+    zr.add(line2);
+
+    arrowX = toX + botX;
+    arrowY = toY + botY;
+    line3 = draw_line(toX, toY, arrowX, arrowY);
+    zr.add(line3);
+
+    //toX <0, boY < 0
+    line4 = draw_line(mullion.begin.x - topX, mullion.begin.y - botY, mullion.end.x - topX, mullion.end.y + botY);
+    zr.add(line4);
+    line5 = draw_line(mullion.begin.x + topX, mullion.begin.y - botY, mullion.end.x + topX, mullion.end.y + botY);
     zr.add(line5);
 }
