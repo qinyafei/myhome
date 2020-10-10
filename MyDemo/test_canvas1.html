@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <title>Canvas tutorial</title>
+    <script type="text/javascript">
+        function draw() {
+            var canvas = document.getElementById('tutorial');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+            }
+        }
+    </script>
+    <style type="text/css">
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body onload="draw();">
+    <canvas id="tutorial" width="500" height="450" style="border:1px solid #000"></canvas>
+    <script type="text/javascript">
+        var a = document.getElementById("tutorial");
+        var ctx = a.getContext("2d");
+        ctx.font = "40px 宋体";                //设置或返回文本内容的当前字体属性
+        ctx.textAlign = "center";                //设置或返回文本内容的当前对齐方式
+        ctx.textBaseline = "middle";        //设置或返回在绘制文本时使用的当前文本基线
+        var grd = ctx.createLinearGradient(50, 50, 150, 50);
+        grd.addColorStop(0, "red");
+        grd.addColorStop(0.3, "blue");
+        grd.addColorStop(0.5, "green");
+        grd.addColorStop(0.7, "yellow");
+        grd.addColorStop(1, "black");
+        ctx.fillStyle = grd;
+        ctx.fillText("MINSONG", 100, 50);        //在画布上绘制“被填充的”文本
+
+        ctx.font = "30px 宋体";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        var grd = ctx.createLinearGradient(100, 50, 350, 50);
+        grd.addColorStop(0, "red");
+        grd.addColorStop(0.3, "blue");
+        grd.addColorStop(0.5, "green");
+        grd.addColorStop(0.7, "yellow");
+        grd.addColorStop(1, "black");
+        ctx.strokeStyle = grd;
+        var txt = "ZHANGSHENG";
+        ctx.fillText("width:" + ctx.measureText(txt).width, 180, 300);        //返回包含指定文本宽度的对象
+        ctx.strokeText(txt, 200, 150);        //在画布上绘制文本（无填充）
+    </script>
+
+</body>
+
+</html>
