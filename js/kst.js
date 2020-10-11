@@ -11,11 +11,9 @@ function draw_hdimensioning(dimen) {
     textlen = 20;
 
     //1 画起止线
-    leftline = draw_line(dimen.begin.x, dimen.end.y, dimen.begin.x, dimen.end.y + dimen.span);
-    zr.add(leftline);
+    draw_line(dimen.begin.x, dimen.end.y, dimen.begin.x, dimen.end.y + dimen.span);
 
-    rightline = draw_line(dimen.end.x, dimen.end.y, dimen.end.x, dimen.end.y + dimen.span);
-    zr.add(rightline);
+    draw_line(dimen.end.x, dimen.end.y, dimen.end.x, dimen.end.y + dimen.span);
 
     //画向右箭头
     fromX = dimen.begin.x + (dimen.end.x - dimen.begin.x) / 2 + textlen;
@@ -45,11 +43,9 @@ function draw_vdimensioning(dimen) {
     textlen = 20;
 
     //1 画起止线
-    topline = draw_line(dimen.begin.x, dimen.begin.y, dimen.begin.x + dimen.span, dimen.begin.y);
-    zr.add(topline);
+    draw_line(dimen.begin.x, dimen.begin.y, dimen.begin.x + dimen.span, dimen.begin.y);
 
-    botline = draw_line(dimen.end.x, dimen.end.y, dimen.end.x + dimen.span, dimen.end.y);
-    zr.add(botline);
+    draw_line(dimen.end.x, dimen.end.y, dimen.end.x + dimen.span, dimen.end.y);
 
     //画向上箭头
     fromX = dimen.begin.x + dimen.span;
@@ -97,13 +93,11 @@ function draw_hmullion(mullion) {
 
     var arrowX = toX + topX,
         arrowY = toY + topY;
-    line2 = draw_line(arrowX, arrowY, toX, toY);
-    zr.add(line2);
+    draw_line(arrowX, arrowY, toX, toY);
 
     arrowX = toX + botX;
     arrowY = toY + botY;
-    line3 = draw_line(toX, toY, arrowX, arrowY);
-    zr.add(line3);
+    draw_line(toX, toY, arrowX, arrowY);
 
 
     //画向右箭头
@@ -122,18 +116,14 @@ function draw_hmullion(mullion) {
 
     var arrowX = toX + topX,
         arrowY = toY + topY;
-    line2 = draw_line(arrowX, arrowY, toX, toY);
-    zr.add(line2);
+    draw_line(arrowX, arrowY, toX, toY);
 
     arrowX = toX + botX;
     arrowY = toY + botY;
-    line3 = draw_line(toX, toY, arrowX, arrowY);
-    zr.add(line3);
+    draw_line(toX, toY, arrowX, arrowY);
 
-    line4 = draw_line(mullion.begin.x - topX, mullion.begin.y - botY, mullion.end.x + topX, mullion.begin.y - botY);
-    zr.add(line4);
-    line5 = draw_line(mullion.begin.x - topX, mullion.end.y + botY, mullion.end.x + topX, mullion.end.y + botY);
-    zr.add(line5);
+    draw_line(mullion.begin.x - topX, mullion.begin.y - botY, mullion.end.x + topX, mullion.begin.y - botY);
+    draw_line(mullion.begin.x - topX, mullion.end.y + botY, mullion.end.x + topX, mullion.end.y + botY);
 }
 
 
@@ -164,13 +154,11 @@ function draw_vmullion(mullion) {
 
     var arrowX = toX + topX,
         arrowY = toY + topY;
-    line2 = draw_line(arrowX, arrowY, toX, toY);
-    zr.add(line2);
+    draw_line(arrowX, arrowY, toX, toY);
 
     arrowX = toX + botX;
     arrowY = toY + botY;
-    line3 = draw_line(toX, toY, arrowX, arrowY);
-    zr.add(line3);
+    draw_line(toX, toY, arrowX, arrowY);
 
 
     //画向右箭头
@@ -189,17 +177,13 @@ function draw_vmullion(mullion) {
 
     var arrowX = toX + topX,
         arrowY = toY + topY;
-    line2 = draw_line(arrowX, arrowY, toX, toY);
-    zr.add(line2);
+    draw_line(arrowX, arrowY, toX, toY);
 
     arrowX = toX + botX;
     arrowY = toY + botY;
-    line3 = draw_line(toX, toY, arrowX, arrowY);
-    zr.add(line3);
+    draw_line(toX, toY, arrowX, arrowY);
 
     //toX <0, boY < 0
-    line4 = draw_line(mullion.begin.x - topX, mullion.begin.y - botY, mullion.end.x - topX, mullion.end.y + botY);
-    zr.add(line4);
-    line5 = draw_line(mullion.begin.x + topX, mullion.begin.y - botY, mullion.end.x + topX, mullion.end.y + botY);
-    zr.add(line5);
+    draw_line(mullion.begin.x - topX, mullion.begin.y - botY, mullion.end.x - topX, mullion.end.y + botY);
+    draw_line(mullion.begin.x + topX, mullion.begin.y - botY, mullion.end.x + topX, mullion.end.y + botY);
 }

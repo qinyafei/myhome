@@ -59,10 +59,9 @@ DivideLine = function () {
     this.end = new Point();
 };
 
-//基础框架
-BasicFrame= function () {
-    this.begin = new Point();
-    this.end = new Point();
-    this.divides = []; 
 
+//转角
+Corner = function() {
+    this.ldivide = new DivideLine();
+    this.rdivide = new DivideLine();
 };
