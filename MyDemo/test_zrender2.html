@@ -26,7 +26,7 @@
 
 <body>
     <div>
-        <button type="button" onclick="onAttr()">change</button>  
+        <button type="button" onclick="onAttr()">change</button>
     </div>
     <!-- 容器 -->
     <div id="main"></div>
@@ -79,16 +79,105 @@
 
         function onAttr(rc2) {
             rc2.attr({
-            style: {
-                fill: 'yellow'
-            },
-            shape: {
-                width: 300,
-                height: 200
-            }
-        });
+                style: {
+                    fill: 'yellow'
+                },
+                shape: {
+                    width: 300,
+                    height: 200
+                }
+            });
         }
-       
+
+        //fortest
+        zr.add(new zrender.Line(
+            {
+                style:
+                {
+                    xStart: 0,
+                    yStart: 100,
+                    xEnd: 300,
+                    yEnd: 100,
+                    strokeColor: 'black',
+                    lineWidth: 1
+                }
+            }));
+
+        zr.add(new zrender.Line(
+            {
+                style:
+                {
+                    xStart: 100,
+                    yStart: 0,
+                    xEnd: 100,
+                    yEnd: 300,
+                    strokeColor: 'black',
+                    lineWidth: 1
+                }
+            }));
+
+        zr.add(new zrender.Text(
+            {
+                style:
+                {
+                    x: 100,
+                    y: 100,
+                    color: 'red',
+                    text: 'Align:right;\nBaseline:bottom',
+                    textAlign: 'right',
+                    textBaseline: 'bottom'
+                },
+                hoverable: true,
+                zlevel: 2
+            }));
+
+        zr.add(new zrender.Text(
+            {
+                style:
+                {
+                    x: 100,
+                    y: 100,
+                    color: 'red',
+                    text: 'Align:right;\nBaseline:top',
+                    textAlign: 'right',
+                    textBaseline: 'top'
+                },
+                hoverable: true,
+                zlevel: 2
+            }));
+
+        zr.add(new zrender.Text(
+            {
+                style:
+                {
+                    x: 100,
+                    y: 100,
+                    color: 'red',
+                    text: 'Align:left;\nBaseline:bottom',
+                    textAlign: 'left',
+                    textBaseline: 'bottom'
+                },
+                hoverable: true,
+                zlevel: 2
+            }));
+
+        zr.add(new zrender.Text(
+            {
+                style:
+                {
+                    x: 100,
+                    y: 100,
+                    color: 'red',
+                    text: 'Align:left;\nBaseline:top',
+                    textAlign: 'left',
+                    textBaseline: 'top'
+                },
+                hoverable: true,
+                zlevel: 2
+            }));
+
+        zr.render();
+
 
     </script>
 </body>

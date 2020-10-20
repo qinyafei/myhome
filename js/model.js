@@ -17,7 +17,8 @@ Mullion = function () {
 
     this.begin = new Point();
     this.end = new Point();
-    this.type = 1;
+    this.type = 1; //1:hor 2:ver
+    this.pointArray = []; //fill points array
 };
 
 
@@ -25,7 +26,7 @@ Mullion = function () {
 Joint = function () {
     this.begin = new Point();
     this.end = new Point();
-    this.type = 3;
+    this.type = 1;//1:hor 2:ver
 };
 
 
@@ -38,7 +39,7 @@ Dimensioning = function () {
 };
 
 //框
-Frame = function() {
+WindowFrame = function() {
     this.out_begin = new Point();
     this.out_end = new Point();
  
@@ -64,4 +65,14 @@ DivideLine = function () {
 Corner = function() {
     this.ldivide = new DivideLine();
     this.rdivide = new DivideLine();
+};
+
+//开扇
+WindowFan = function() {
+
+};
+
+//开扇的单个扇边
+SingleFan = function() {
+
 };

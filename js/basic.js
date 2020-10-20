@@ -1,4 +1,6 @@
 
+var basicfrm;
+
 //基础绘图
 BasicFrame = function () {
     this.begin = new Point();
@@ -14,6 +16,13 @@ BasicFrame = function () {
         this.corners.push(corner);
     }
 
+    this.delDivide = function (divide) {
+    }
+
+    this.delCorner = function (corner) {
+
+    }
+    
     /**
      * 绘制
     */

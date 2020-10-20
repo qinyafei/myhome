@@ -94,11 +94,17 @@ function draw_hmullion(mullion) {
     var arrowX = toX + topX,
         arrowY = toY + topY;
     draw_line(arrowX, arrowY, toX, toY);
+    //保存起始点
+    var startx = arrowX;
+    var starty = arrowY;
+
+    mullion.pointArray.push([arrowX, arrowY]);
+    mullion.pointArray.push([toX, toY]);
 
     arrowX = toX + botX;
     arrowY = toY + botY;
     draw_line(toX, toY, arrowX, arrowY);
-
+    mullion.pointArray.push([arrowX, arrowY]);
 
     //画向右箭头
     fromX = mullion.end.x - edge;
@@ -117,13 +123,20 @@ function draw_hmullion(mullion) {
     var arrowX = toX + topX,
         arrowY = toY + topY;
     draw_line(arrowX, arrowY, toX, toY);
+    mullion.pointArray.push([arrowX, arrowY]);
+    mullion.pointArray.push([toX, toY]);
 
     arrowX = toX + botX;
     arrowY = toY + botY;
     draw_line(toX, toY, arrowX, arrowY);
+    mullion.pointArray.push([arrowX, arrowY]);
+
+    mullion.pointArray.push(startx, starty);
 
     draw_line(mullion.begin.x - topX, mullion.begin.y - botY, mullion.end.x + topX, mullion.begin.y - botY);
     draw_line(mullion.begin.x - topX, mullion.end.y + botY, mullion.end.x + topX, mullion.end.y + botY);
+
+    fill_model(mullion.pointArray);
 }
 
 
@@ -131,7 +144,7 @@ function draw_hmullion(mullion) {
  * 绘制竖梃
 */
 function draw_vmullion(mullion) {
-    theta = 25;
+    theta = 30;
     headlen = 10;
     textlen = 20;
 
@@ -155,11 +168,17 @@ function draw_vmullion(mullion) {
     var arrowX = toX + topX,
         arrowY = toY + topY;
     draw_line(arrowX, arrowY, toX, toY);
+    mullion.pointArray.push([arrowX, arrowY]);
+    mullion.pointArray.push([toX, toY]);
+
+        //保存起始点
+        var startx = arrowX;
+        var starty = arrowY;
 
     arrowX = toX + botX;
     arrowY = toY + botY;
     draw_line(toX, toY, arrowX, arrowY);
-
+    mullion.pointArray.push([arrowX, arrowY]);
 
     //画向右箭头
     fromX = mullion.end.x;
@@ -178,12 +197,68 @@ function draw_vmullion(mullion) {
     var arrowX = toX + topX,
         arrowY = toY + topY;
     draw_line(arrowX, arrowY, toX, toY);
+    mullion.pointArray.push([arrowX, arrowY]);
+    mullion.pointArray.push([toX, toY]);
 
     arrowX = toX + botX;
     arrowY = toY + botY;
     draw_line(toX, toY, arrowX, arrowY);
+    mullion.pointArray.push([arrowX, arrowY]);
+
+    mullion.pointArray.push(startx, starty);
 
     //toX <0, boY < 0
     draw_line(mullion.begin.x - topX, mullion.begin.y - botY, mullion.end.x - topX, mullion.end.y + botY);
     draw_line(mullion.begin.x + topX, mullion.begin.y - botY, mullion.end.x + topX, mullion.end.y + botY);
+
+    fill_model(mullion.pointArray);
+}
+
+function draw_frame(frame) {
+    draw_rect(frame.out_begin.x, frame.out_begin.y, frame.out_end.x - frame.out_begin.x, frame.out_end.y - frame.out_begin.y);
+
+    draw_rect(frame.in_begin.x, frame.in_begin.y, frame.in_end.x - frame.in_begin.x, frame.in_end.y - frame.in_begin.y);
+}
+
+/**
+ * 选中状态门框绘制
+*/
+function fill_frame(frame) {
+
+    draw_fill_rect(frame.out_begin.x, frame.out_begin.y, frame.out_end.x - frame.out_begin.x,
+        frame.in_begin.y - frame.out_begin.y);
+
+    draw_fill_rect(frame.in_end.x, frame.in_begin.y, frame.out_end.x - frame.in_end.x,
+        frame.in_end.y - frame.in_begin.y);
+
+    draw_fill_rect(frame.out_begin.x, frame.in_end.y, frame.out_end.x - frame.out_begin.x,
+        frame.out_end.y - frame.in_end.y);
+
+    draw_fill_rect(frame.out_begin.x, frame.in_begin.y, frame.in_begin.x - frame.out_begin.x,
+        frame.in_end.y - frame.in_begin.y);
+
+}
+
+/**
+ * 选中状态梃绘制
+*/
+function fill_model(pointArray) {
+    obj = new zrender.Polygon({
+        shape: {
+            points: pointArray
+        }
+    });
+
+    zr.add(obj)
+}
+
+/**
+ * 判定点是否在实体框内
+*/
+function pointInRect(x, y, begin, end) {
+    if (x > begin.x && x < end.x && y > begin.y && y < end.y) {
+        return true;
+    }
+
+    return false;
 }

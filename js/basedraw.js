@@ -69,6 +69,29 @@ function draw_rect(x, y, width, height) {
 }
 
 /**
+ * 绘制填充矩形框
+*/
+function draw_fill_rect(x, y, width, height) {
+    var rect = new zrender.Rect({
+        style: {
+            fill: 'red',      //填充颜色
+            stroke: 'none'    //描边颜色
+        },
+        shape: {
+            x: x,           //x,y代表坐标
+            y: y,
+            width: width,
+            height: height,
+           // r: [3]            //圆角
+        },
+        z: 1                   //层次，大的会覆盖小的
+    });
+
+    zr.add(rect);
+}
+
+
+/**
  * 绘制文本
 */
 function draw_text(str, x, y) {
