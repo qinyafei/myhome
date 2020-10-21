@@ -67,12 +67,14 @@ Corner = function() {
     this.rdivide = new DivideLine();
 };
 
-//开扇
+//开扇 有可能是多边形
 WindowFan = function() {
-
+    this.begin = new Point();
+    this.end = new Point();
 };
 
 //开扇的单个扇边
+//有可能是多边形
 SingleFan = function() {
-
+    this.fanEdge = new WindowFrame();
 };

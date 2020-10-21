@@ -11,12 +11,17 @@ var design;
 
 //设计绘图
 DesignFrame = function () {
-    this.frame = new WindowFrame();
-    //梃
+    //外框 windowframe
+    this.frames = [];
+    //开扇数组
+    this.windowFans = [];
+    //单扇边数组
+    this.singleFans = [];
+    //梃数组
     this.mullions = [];
-    //拼接
+    //拼接数组
     this.joints = [];
-    //玻璃
+    //玻璃数组
     this.glasses = [];
 
     this.addMullion = function (mullion) {
@@ -188,8 +193,21 @@ DesignFrame = function () {
     * 根据坐标判定选中的实体
     */
     this.selectObj = function (x, y) {
-        
-    }
+        this.mullions.map(function (value, index) {
+
+        });
+
+        this.frames.map(function (value, index) {
+
+        });
+
+        this.windowFans.map(function (value, index){
+
+        });
+
+        this.singleFans.map(function (value, index) {
+
+        });
 };
 
 
