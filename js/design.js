@@ -1,6 +1,6 @@
 /*
  * @File: 
- * @Brief: 
+ * @Brief: 设计绘图
  * @Version: 1.0.0
  * @Author: xxx
  * @Date: 2020-10-10 07:51:10
@@ -9,20 +9,17 @@
 
 var design;
 
-//设计绘图
+/**
+ * 设计绘图：一扇窗主要由：外框/梃/拼接/开扇组成
+*/
 DesignFrame = function () {
-    //外框 windowframe
-    this.frames = [];
+    this.frame = new WindowFrame();
     //开扇数组
     this.windowFans = [];
-    //单扇边数组
-    this.singleFans = [];
     //梃数组
     this.mullions = [];
     //拼接数组
     this.joints = [];
-    //玻璃数组
-    this.glasses = [];
 
     this.addMullion = function (mullion) {
         this.mullions.push(mullion);
@@ -32,19 +29,11 @@ DesignFrame = function () {
         this.joints.push(joint);
     }
 
-    this.addGlass = function (glass) {
-        this.glasses.push(glass);
-    }
-
     this.delMullion = function (mullion) {
 
     }
 
     this.delJoint = function (joint) {
-
-    }
-
-    this.delGlass = function (glass) {
 
     }
 
