@@ -21,21 +21,94 @@ DesignFrame = function () {
     //拼接数组
     this.joints = [];
 
-    this.addMullion = function (mullion) {
-        this.mullions.push(mullion);
+    this.addMullion = function (x, y, type) {
+        //横梃分割
+        if (type == 1) {
+            horpt = this.probeHorEdge(x, y);
+            mul = new Mullion();
+            mul.begin.x = horpt[0];
+            mul.begin.y = y;
+            mul.end.x = horpt[1];
+            mul.end.y = y;
+            mul.type = type;
+    
+            verpt = this.probeVerEdge(x, y);
+            
+            winfan1 = new this.WindowFans();
+            winfan1.frame.out_begin.x = horpt[0];
+            winfan1.frame.out_begin.y = verpt[0];
+            winfan1.frame.out_end.x = horpt[1];
+            winfan1.frame.out_end.y = y;
+            winfan1.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
+            winfan1.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
+            winfan1.frame.in_out.x = winfan1.frame.out_end.x - frame_span;
+            winfan1.frame.in_out.y = winfan1.frame.out_end.y - frame_span;
+
+            winfan2 = new this.WinowFans();
+            winfan2.frame.out_begin.x = horpt[0];
+            winfan2.frame.out_begin.y = y;
+            winfan2.frame.out_end.x = horpt[1];
+            winfan2.frame.out_end.y = verpt[1];
+            winfan2.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
+            winfan2.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
+            winfan2.frame.in_out.x = winfan1.frame.out_end.x - frame_span;
+            winfan2.frame.in_out.y = winfan1.frame.out_end.y - frame_span;
+
+            this.windowFans.push(winfan1);
+            this.windowFans.push(winfan2);
+            this.mullions.push(mul);
+        }
+
+         //竖梃分割
+         if (type == 2) {
+            verpt = this.probeVerEdge(x, y);
+            mul = new Mullion();
+            mul.begin.x = x;
+            mul.begin.y = verpt[0];
+            mul.end.x = x;
+            mul.end.y = verpt[1];
+            mul.type = type;
+    
+            horpt = this.probeHorEdge(x, y);
+            
+            winfan1 = new this.WindowFans();
+            winfan1.frame.out_begin.x = horpt[0];
+            winfan1.frame.out_begin.y = verpt[0];
+            winfan1.frame.out_end.x = x;
+            winfan1.frame.out_end.y = verpt[1];
+            winfan1.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
+            winfan1.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
+            winfan1.frame.in_out.x = winfan1.frame.out_end.x - frame_span;
+            winfan1.frame.in_out.y = winfan1.frame.out_end.y - frame_span;
+
+            winfan2 = new this.WinowFans();
+            winfan2.frame.out_begin.x = x;
+            winfan2.frame.out_begin.y = verpt[0];
+            winfan2.frame.out_end.x = horpt[1];
+            winfan2.frame.out_end.y = verpt[1];
+            winfan2.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
+            winfan2.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
+            winfan2.frame.in_out.x = winfan1.frame.out_end.x - frame_span;
+            winfan2.frame.in_out.y = winfan1.frame.out_end.y - frame_span;
+
+            this.windowFans.push(winfan1);
+            this.windowFans.push(winfan2);
+            this.mullions.push(mul);
+        }
+ 
     }
 
     this.addJoint = function (joint) {
         this.joints.push(joint);
-    }
+    };
 
     this.delMullion = function (mullion) {
 
-    }
+    };
 
     this.delJoint = function (joint) {
 
-    }
+    };
 
     /**
      * 绘制
@@ -78,6 +151,10 @@ DesignFrame = function () {
         this.joints.map(function (value, index) {
             //draw_line(value.ldivide.begin.x, value.ldivide.begin.y, value.ldivide.end.x, value.ldivide.end.y);
             //draw_line(value.rdivide.begin.x, value.rdivide.begin.y, value.rdivide.end.x, value.rdivide.end.y);
+        });
+
+        this.windowFans.map(function (value, index) {
+            value.draw();
         });
     };
 
@@ -190,46 +267,33 @@ DesignFrame = function () {
 
         });
 
-        this.windowFans.map(function (value, index){
+        this.windowFans.map(function (value, index) {
 
         });
 
         this.singleFans.map(function (value, index) {
 
         });
-};
+    };
 
 
 
-function init_design() {
-    design = new DesignFrame();
-    design.frame.out_begin.x = 200;
-    design.frame.out_begin.y = 200;
-    design.frame.out_end.x = 800;
-    design.frame.out_end.y = 600;
+    function init_design() {
+        design = new DesignFrame();
+        design.frame.out_begin.x = 200;
+        design.frame.out_begin.y = 200;
+        design.frame.out_end.x = 800;
+        design.frame.out_end.y = 600;
 
-    span = 10;
-    design.frame.in_begin.x = design.frame.out_begin.x + span;
-    design.frame.in_begin.y = design.frame.out_begin.y + span;
-    design.frame.in_end.x = design.frame.out_end.x - span;
-    design.frame.in_end.y = design.frame.out_end.y - span;
+        span = 10;
+        design.frame.in_begin.x = design.frame.out_begin.x + span;
+        design.frame.in_begin.y = design.frame.out_begin.y + span;
+        design.frame.in_end.x = design.frame.out_end.x - span;
+        design.frame.in_end.y = design.frame.out_end.y - span;
 
+        design.addMullion(400, 400, 1);
 
-    vmull = new Mullion();
-    vmull.begin.x = 400;
-    vmull.begin.y = design.frame.out_begin.y;
-    vmull.end.x = 400;
-    vmull.end.y = design.frame.out_end.y;
-    vmull.type = 2;
-    design.addMullion(vmull);
+        design.addMullion(400, 400, 2);
 
-    hmull = new Mullion();
-    hmull.begin.x = vmull.begin.x;
-    hmull.begin.y = 400;
-    hmull.end.x = design.frame.out_end.x;
-    hmull.end.y = 400;
-    hmull.type = 1;
-    design.addMullion(hmull);
-
-    design.draw();
-}
+        design.draw();
+    }

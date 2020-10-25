@@ -12,14 +12,7 @@ Point = function () {
 */
 var model_type = 0;
 
-//横梃 / 竖梃
-Mullion = function () {
 
-    this.begin = new Point();
-    this.end = new Point();
-    this.type = 1; //1:hor 2:ver
-    this.pointArray = []; //fill points array
-};
 
 
 //水平 / 垂直拼接
@@ -38,14 +31,7 @@ Dimensioning = function () {
     this.span = 15;
 };
 
-//框
-WindowFrame = function() {
-    this.out_begin = new Point();
-    this.out_end = new Point();
- 
-    this.in_begin = new Point();
-    this.in_end = new Point();
-};
+
 
 //玻璃
 Glass = function () {

@@ -19,8 +19,8 @@ window.onload = function () {
 
     //
     evloop = new EventLoop();
-    //init_basic();
-    init_design();
+    init_basic();
+    //init_design();
 
     //设置绘图类型按钮点击事件
     $("#type-group button").click(function () {
