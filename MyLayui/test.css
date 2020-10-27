@@ -1,5 +1,31 @@
 
-.layui-form-item .layui-input-block {
+.layui-form-item {
     width: 200px;
     height:20px;
+}
+
+.layui-input-block {
+    width: 100px;
+    height:15px;
+    margin-left: 130px;
+    min-height: 36px
+}
+
+.layui-form-label {
+    width: 80px;
+    padding: 5px 10px;
+}
+
+
+.layui-input, .layui-select, .layui-textarea {
+    height: 30px;
+    line-height: 30px\9;
+}
+.layui-form-select dl dd, .layui-form-select dl dt {
+    line-height: 30px;
+}
+ 
+.layui-table-cell{
+    height:36px;
+    line-height: 36px;
 }
