@@ -29,7 +29,7 @@
 <![endif]-->
 
 
-    <ul class="layui-nav layui-bg-blue" lay-filter="test" >
+    <ul class="layui-nav layui-bg-blue" lay-filter="test">
         <li class="layui-nav-item"><a href="">主页</a></li>
         <li class="layui-nav-item layui-this">
             <a href="javascript:;">文件</a>
@@ -54,33 +54,39 @@
     <fieldset class="layui-elem-field site-demo-button">
         <legend>组件绘制</legend>
         <div>
-          <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-          <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-          <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-          <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-          <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-          <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-  
-        </div>
-      </fieldset>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                    class="layui-icon">&#xe619;</i></button>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                    class="layui-icon">&#xe603;</i></button>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
 
-    <div class="layui-tab">
+        </div>
+    </fieldset>
+
+    <div class="layui-tab layui-col-xs12">
         <ul class="layui-tab-title">
-            <li class="layui-this">网站设置</li>
-            <li>用户管理</li>
-            <li>权限分配</li>
-            <li>商品管理</li>
-            <li>订单管理</li>
+            <li class="layui-this">框架绘制</li>
+            <li>设计绘制</li>
+            <li>玻璃</li>
         </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                1. 高度默认自适应，也可以随意固宽。
-                <br>2. Tab进行了响应式处理，所以无需担心数量多少。
+                <iframe class="layui-col-xs12" data-frameid="'+id+2'" scrolling="no" frameborder="0" src="test_layui.html">
+                </iframe>
             </div>
-            <div class="layui-tab-item">内容2</div>
-            <div class="layui-tab-item">内容3</div>
-            <div class="layui-tab-item">内容4</div>
-            <div class="layui-tab-item">内容5</div>
+            <div class="layui-tab-item">
+                <iframe class="layui-col-xs12" data-frameid="'+id+2'" scrolling="no" frameborder="0"
+                    src="test-layui4.html">
+                </iframe>
+            </div>
+            <div class="layui-tab-item">
+                <iframe class="layui-col-xs12" data-frameid="'+id+3'" scrolling="no" frameborder="0"
+                    src="test_layui2.html" >
+                </iframe>
+            </div>
         </div>
     </div>
 
@@ -88,6 +94,7 @@
 
     <script src="layui-v2.5.6/layui/layui.js" charset="utf-8"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
     <script>
         layui.use('element', function () {
             var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -98,6 +105,8 @@
                 layer.msg(elem.text());
             });
         });
+
+
     </script>
 
     <script>
@@ -105,46 +114,37 @@
             var $ = layui.jquery;
             element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-            //触发事件
-            var active = {
-                tabAdd: function () {
-                    //新增一个Tab项
-                    element.tabAdd('demo', {
-                        title: '新选项' + (Math.random() * 1000 | 0) //用于演示
-                        , content: '内容' + (Math.random() * 1000 | 0)
-                        , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
-                    })
-                }
-                , tabDelete: function (othis) {
-                    //删除指定Tab项
-                    element.tabDelete('demo', '44'); //删除：“商品管理”
-
-
-                    othis.addClass('layui-btn-disabled');
-                }
-                , tabChange: function () {
-                    //切换到指定Tab项
-                    element.tabChange('demo', '22'); //切换到：用户管理
-                }
-            };
-
-            $('.site-demo-active').on('click', function () {
-                alert('tab click');
-                var othis = $(this), type = othis.data('type');
-                active[type] ? active[type].call(this, othis) : '';
+            //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
+            var layid = location.hash.replace(/^#current=/, '');//current为刚才定义的lay-filter
+            element.tabChange('current', layid); //假设当前地址为：http://a.com#current=two，那么选项卡会自动切换到“html”这一项
+            //监听Tab切换，以改变地址hash值
+            element.on('tab(current)', function () {
+                location.hash = 'current=' + this.getAttribute('lay-id');
             });
+        });
+    </script>
 
-            //Hash地址的定位
-            var layid = location.hash.replace(/^#test=/, '');
-            element.tabChange('test', layid);
+    <script>
+        layui.use(['element', 'jquery'], function () {
+            var element = layui.element;
+            var $ = jQuery = layui.jquery;
+            var items = ["位运算"];
+            FrameWH();
+            for (var i = 0; i < items.length; i++) {
+                console.log(items[i]);
+            }
 
-            element.on('tab(test)', function (elem) {
-                location.hash = 'test=' + $(this).attr('lay-id');
+            function FrameWH() {
+                var h = $(window).height() - 100;
+                $("iframe").css("height", h + "px");
+            }
+
+            $(window).resize(function () {
+                FrameWH();
             });
 
         });
     </script>
-
 
 </body>
 

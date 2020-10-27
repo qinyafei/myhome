@@ -1,0 +1,49 @@
+<html>  
+<head>
+</head>  
+<link rel="stylesheet" href="layui-v2.5.6/layui/css/layui.css" media="all">
+<body>  
+<div class="layui-tab layui-col-xs12" lay-filter="demo" lay-data="{ height:332}">  
+    <ul class="layui-tab-title">  
+        <li class="layui-this">hao123</li>  
+        <li>百度</li>  
+        <li>layui的button</li>  
+    </ul>  
+    <div class="layui-tab-content">  
+        <div class="layui-tab-item layui-show">  
+            <iframe class='layui-col-xs12' src="http://www.hao123.com"></iframe>  
+        </div>  
+        <div class="layui-tab-item" >  
+            <iframe class='layui-col-xs12' src="http://www.taobao.com"></iframe>  
+        </div>  
+        <div class="layui-tab-item">  
+            <button class="layui-btn layui-btn-normal">百搭按钮</button>  
+        </div>  
+    </div>  
+</div>  
+<script src="../js/jquery-3.4.1.js"></script>
+<script src="layui-v2.5.6/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use(['element','jquery'], function() {
+            var element = layui.element;
+            var $ = jQuery = layui.jquery;
+            var items = ["位运算"];
+            FrameWH();
+            for(var i = 0;i<items.length;i++){
+                console.log(items[i]);
+            }
+            
+            function FrameWH() {
+            var h = $(window).height()-100;
+            $("iframe").css("height",h+"px");
+        }
+ 
+        $(window).resize(function () {
+            FrameWH();
+        });
+            
+        });
+    </script>
+</body>
+
+</html>

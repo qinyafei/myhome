@@ -25,7 +25,13 @@
     line-height: 30px;
 }
  
-.layui-table-cell{
-    height:36px;
-    line-height: 36px;
-}
+
+
+
+legend {
+    color:#302A2A;  
+    font: bold 16px/2 Verdana, Geneva, sans-serif;  
+    font-weight: bold;  
+    text-align: left;  
+    text-shadow: 2px 2px 2px rgb(88, 126, 156);  
+} 
