@@ -1,0 +1,163 @@
+<!--
+ * @File: 
+ * @Brief: 
+ * @Version: 1.0.0
+ * @Author: xxx
+ * @Date: 2020-10-26 10:36:08
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="stylesheet" href="layui-v2.5.6/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="test.css" media="all">
+  <script src="../js/jquery-3.4.1.js"></script>
+  <script src="layui-v2.5.6/layui/layui.js" charset="utf-8"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+  <script src="../js/zrender.js"></script>
+  <script src="../js/algorithm.js"></script>
+  <script src="../js/commondef.js"></script>
+  <script src="../js/model.js"></script>
+  <script src="../js/mullion.js"></script>
+  <script src="../js/windowfan.js"></script>
+  <script src="../js/windowframe.js"></script>
+  <script src="../js/basedraw.js"></script>
+  <script src="../js/eventloop.js"></script>
+  <script src="../js/kstdraw.js"></script>
+  <script src="../js/basic.js"></script>
+  <script src="../js/design.js"></script>
+  <script src="designidx.js"></script>
+</head>
+
+<body>
+  <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+  <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+  <div class="layui-row">
+    <div class="layui-col-md2">
+      <label class="layui-form-label">编号</label>
+      <input type="text" name="number" class="layui-input">
+    </div>
+    <div class="layui-col-md2">
+      <label class="layui-form-label">安装位置</label>
+      <div class="layui-input-inline" style="width:120px;height:25px;">
+        <select name="batchId" class="layui-form-select">
+          <option value="">请选择市</option>
+          <option value="杭州">杭州</option>
+          <option value="宁波" disabled="">宁波</option>
+          <option value="温州">温州</option>
+          <option value="温州">台州</option>
+          <option value="温州">绍兴</option>
+        </select>
+      </div>
+    </div>
+    <div class="layui-col-md2">
+      <label class="layui-form-label">宽</label>
+      <input type="text" name="number" placeholder="请输入标题" class="layui-input">
+    </div>
+    <div class="layui-col-md2">
+      <label class="layui-form-label">高</label>
+      <input type="text" name="number" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-col-md2">
+      <label class="layui-form-label">窗型</label>
+      <select name="quiz2">
+        <option value="">请选择市</option>
+        <option value="杭州">杭州</option>
+        <option value="宁波" disabled="">宁波</option>
+        <option value="温州">温州</option>
+        <option value="温州">台州</option>
+        <option value="温州">绍兴</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-row">
+    <div class="layui-col-md1">
+      <fieldset class="layui-elem-field">
+        <legend>按钮组</legend>
+        <div class="layui-btn-group">
+          <button type="button" class="layui-btn">垂直拼接</button>
+          <button type="button" class="layui-btn ">水平拼接</button>
+        </div>
+        <div class="layui-btn-group" style="margin-top: 20px;">
+          <button type="button" class="layui-btn">横梃</button>
+          <button type="button" class="layui-btn ">竖梃</button>
+        </div>
+      </fieldset>
+    </div>
+    <div class="layui-col-md9">
+      <div id="main1"></div>
+    </div>
+    <div class="layui-col-md1 layui-col-md-offset9">
+      <table class="layui-table" lay-size="sm">
+        <colgroup>
+          <col width="60" height="15">
+          <col width="80" height="15">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>昵称</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>贤心</td>
+            <td>
+              <div class="layui-row">
+                <div class="layui-col-xs3">
+                  <input type="text" autocomplete="on" style="width: 80px;height: 25px;" placeholder="请输入"
+                    class="layui-input">
+                </div>
+                <div class="layui-col-xs3 layui-col-md-offset6">
+                  <button type="button" style="height: 25px;" class="layui-btn layui-btn-primary layui-btn-xs"
+                    id="testbtn">+</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>许闲心</td>
+            <td><input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入"
+                class="layui-input" style="width: 80px;height: 25px;"></td>
+          </tr>
+          <tr>
+            <td>sentsin</td>
+            <td>
+              <div class="layui-input-inline">
+                <select name="quiz2">
+                  <option value="">请选择市</option>
+                  <option value="杭州">杭州</option>
+                  <option value="宁波" disabled="">宁波</option>
+                  <option value="温州">温州</option>
+                  <option value="温州">台州</option>
+                  <option value="温州">绍兴</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    jQuery("#lay").click(function () {
+      layer.msg("点击事件");
+    });
+
+  </script>
+
+
+</body>
+
+</html>

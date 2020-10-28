@@ -43,4 +43,8 @@ WindowFan = function () {
                  this.frame.in_end.x - this.frame_in_begin.x, this.frame.in_end.y - this.frame.in_begin.y);
         }
     };
+
+    this.draw = function() {
+        this.frame.draw();
+    };
 };

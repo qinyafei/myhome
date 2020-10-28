@@ -11,6 +11,20 @@
     min-height: 36px
 }
 
+
+.layui-input {
+    width: 120px;
+    height:25px;
+    margin-left: 50px;
+    min-height: 20px
+}
+
+.layui-form-label {
+    width: 50px;
+    height:15px;
+}
+
+
 .layui-form-label {
     width: 80px;
     padding: 5px 10px;

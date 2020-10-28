@@ -31,36 +31,36 @@ DesignFrame = function () {
             mul.end.x = horpt[1];
             mul.end.y = y;
             mul.type = type;
-    
+
             verpt = this.probeVerEdge(x, y);
-            
-            winfan1 = new this.WindowFans();
+
+            winfan1 = new WindowFan();
             winfan1.frame.out_begin.x = horpt[0];
             winfan1.frame.out_begin.y = verpt[0];
             winfan1.frame.out_end.x = horpt[1];
             winfan1.frame.out_end.y = y;
             winfan1.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
             winfan1.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
-            winfan1.frame.in_out.x = winfan1.frame.out_end.x - frame_span;
-            winfan1.frame.in_out.y = winfan1.frame.out_end.y - frame_span;
+            winfan1.frame.in_end.x = winfan1.frame.out_end.x - frame_span;
+            winfan1.frame.in_end.y = winfan1.frame.out_end.y - frame_span;
 
-            winfan2 = new this.WinowFans();
+            winfan2 = new WindowFan();
             winfan2.frame.out_begin.x = horpt[0];
             winfan2.frame.out_begin.y = y;
             winfan2.frame.out_end.x = horpt[1];
             winfan2.frame.out_end.y = verpt[1];
             winfan2.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
             winfan2.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
-            winfan2.frame.in_out.x = winfan1.frame.out_end.x - frame_span;
-            winfan2.frame.in_out.y = winfan1.frame.out_end.y - frame_span;
+            winfan2.frame.in_end.x = winfan1.frame.out_end.x - frame_span;
+            winfan2.frame.in_end.y = winfan1.frame.out_end.y - frame_span;
 
             this.windowFans.push(winfan1);
             this.windowFans.push(winfan2);
             this.mullions.push(mul);
         }
 
-         //竖梃分割
-         if (type == 2) {
+        //竖梃分割
+        if (type == 2) {
             verpt = this.probeVerEdge(x, y);
             mul = new Mullion();
             mul.begin.x = x;
@@ -68,34 +68,34 @@ DesignFrame = function () {
             mul.end.x = x;
             mul.end.y = verpt[1];
             mul.type = type;
-    
+
             horpt = this.probeHorEdge(x, y);
-            
-            winfan1 = new this.WindowFans();
+
+            winfan1 = new WindowFan();
             winfan1.frame.out_begin.x = horpt[0];
             winfan1.frame.out_begin.y = verpt[0];
             winfan1.frame.out_end.x = x;
             winfan1.frame.out_end.y = verpt[1];
             winfan1.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
             winfan1.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
-            winfan1.frame.in_out.x = winfan1.frame.out_end.x - frame_span;
-            winfan1.frame.in_out.y = winfan1.frame.out_end.y - frame_span;
+            winfan1.frame.in_end.x = winfan1.frame.out_end.x - frame_span;
+            winfan1.frame.in_end.y = winfan1.frame.out_end.y - frame_span;
 
-            winfan2 = new this.WinowFans();
+            winfan2 = new WindowFan();
             winfan2.frame.out_begin.x = x;
             winfan2.frame.out_begin.y = verpt[0];
             winfan2.frame.out_end.x = horpt[1];
             winfan2.frame.out_end.y = verpt[1];
             winfan2.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
             winfan2.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
-            winfan2.frame.in_out.x = winfan1.frame.out_end.x - frame_span;
-            winfan2.frame.in_out.y = winfan1.frame.out_end.y - frame_span;
+            winfan2.frame.in_end.x = winfan1.frame.out_end.x - frame_span;
+            winfan2.frame.in_end.y = winfan1.frame.out_end.y - frame_span;
 
             this.windowFans.push(winfan1);
             this.windowFans.push(winfan2);
             this.mullions.push(mul);
         }
- 
+
     }
 
     this.addJoint = function (joint) {
@@ -115,7 +115,7 @@ DesignFrame = function () {
     */
     this.draw = function () {
         //draw init windows
-        draw_frame(this.frame);
+        this.frame.draw();
 
         //画水平尺寸标识
         dimen = new Dimensioning();
@@ -140,12 +140,7 @@ DesignFrame = function () {
         draw_vdimensioning(dimen2);
 
         this.mullions.map(function (value, index) {
-            if (value.type == 1) {
-                draw_hmullion(value);
-            } else {
-                draw_vmullion(value);
-            }
-
+            value.draw();
         });
 
         this.joints.map(function (value, index) {
@@ -275,25 +270,26 @@ DesignFrame = function () {
 
         });
     };
+};
 
 
 
-    function init_design() {
-        design = new DesignFrame();
-        design.frame.out_begin.x = 200;
-        design.frame.out_begin.y = 200;
-        design.frame.out_end.x = 800;
-        design.frame.out_end.y = 600;
+function init_design() {
+    design = new DesignFrame();
+    design.frame.out_begin.x = 200;
+    design.frame.out_begin.y = 200;
+    design.frame.out_end.x = 800;
+    design.frame.out_end.y = 600;
 
-        span = 10;
-        design.frame.in_begin.x = design.frame.out_begin.x + span;
-        design.frame.in_begin.y = design.frame.out_begin.y + span;
-        design.frame.in_end.x = design.frame.out_end.x - span;
-        design.frame.in_end.y = design.frame.out_end.y - span;
+    span = 10;
+    design.frame.in_begin.x = design.frame.out_begin.x + span;
+    design.frame.in_begin.y = design.frame.out_begin.y + span;
+    design.frame.in_end.x = design.frame.out_end.x - span;
+    design.frame.in_end.y = design.frame.out_end.y - span;
 
-        design.addMullion(400, 400, 1);
+    design.addMullion(400, 400, 1);
 
-        design.addMullion(400, 400, 2);
+    design.addMullion(400, 400, 2);
 
-        design.draw();
-    }
+    design.draw();
+}
