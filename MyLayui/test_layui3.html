@@ -51,21 +51,6 @@
         <li class="layui-nav-item"><a href="">关于</a></li>
     </ul>
 
-    <fieldset class="layui-elem-field site-demo-button">
-        <legend>组件绘制</legend>
-        <div>
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                    class="layui-icon">&#xe619;</i></button>
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i
-                    class="layui-icon">&#xe603;</i></button>
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-
-        </div>
-    </fieldset>
-
     <div class="layui-tab layui-col-xs12">
         <ul class="layui-tab-title">
             <li class="layui-this">框架绘制</li>
@@ -74,8 +59,9 @@
         </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <iframe class="layui-col-xs12" data-frameid="'+id+2'" scrolling="no" frameborder="0" src="test_layui.html">
-                </iframe>
+                <div class="iframe-container">
+                    <iframe height="500" width="500" src="test_layui.html" frameborder="0" allowfullscreen=""></iframe>       
+                </div>
             </div>
             <div class="layui-tab-item">
                 <iframe class="layui-col-xs12" data-frameid="'+id+2'" scrolling="no" frameborder="0"
