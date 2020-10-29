@@ -1,0 +1,117 @@
+<!--
+ * @File: 
+ * @Brief: 
+ * @Version: 1.0.0
+ * @Author: xxx
+ * @Date: 2020-10-29 12:31:51
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui-v2.5.6/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="test.css" media="all">
+    <script src="layui-v2.5.6/layui/layui.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+<body>
+
+    <div class="layui-collapse" style="width: 400;height: 400;" lay-filter="test">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">为什么JS社区大量</h2>
+            <div class="layui-colla-content">
+                <table class="layui-table" lay-size="xs">
+                    <colgroup>
+                      <col width="60" height="15">
+                      <col width="80" height="15">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>昵称</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>贤心</td>
+                        <td>
+                          <div class="layui-row">
+                            <div class="layui-col-xs3">
+                              <input type="text" autocomplete="on" style="width: 80px;height: 25px;" placeholder="请输入"
+                                class="layui-input">
+                            </div>
+                            <div class="layui-col-xs3 layui-col-md-offset6">
+                              <button type="button" style="height: 25px;" class="layui-btn layui-btn-primary layui-btn-xs"
+                                id="testbtn">+</button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>许闲心</td>
+                        <td><input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入"
+                            class="layui-input" style="width: 80px;height: 25px;"></td>
+                      </tr>
+                      <tr>
+                        <td>sentsin</td>
+                        <td>
+                          <div class="layui-input-inline">
+                            <select name="quiz2">
+                              <option value="">请选择市</option>
+                              <option value="杭州">杭州</option>
+                              <option value="宁波" disabled="">宁波</option>
+                              <option value="温州">温州</option>
+                              <option value="温州">台州</option>
+                              <option value="温州">绍兴</option>
+                            </select>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">为什么前端工程师多不愿意用 Bootstrap 框架？</h2>
+            <div class="layui-colla-content">
+                <p>因为不适合。如果希望开发长期的项目或者制作产品类网站，那么就需要实现特定的设计，为了在维护项目中可以方便地按设计师要求快速修改样式，肯定会逐步编写出各种业务组件、工具类，相当于为项目自行开发一套框架。——来自知乎@Kayo
+                </p>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">layui 更适合哪些开发者？</h2>
+            <div class="layui-colla-content">
+                <p>在前端技术快速变革的今天，layui 仍然坚持语义化的组织模式，甚至于模块理念都是采用类AMD组织形式，并非是有意与时代背道而驰。layui
+                    认为以jQuery为核心的开发方式还没有到完全消亡的时候，而早期市面上基于jQuery的UI都普通做得差强人意，所以需要有一个新的UI去重新为这一领域注入活力，并采用一些更科学的架构方式。
+                    <br><br>
+                    因此准确地说，layui 更多是面向那些追求开发简单的前端工程师们，以及所有层次的服务端程序员。</p>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">贤心是男是女？</h2>
+            <div class="layui-colla-content">
+                <p>man！ 所以这个问题不要再出现了。。。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        layui.use(['element', 'layer'], function () {
+            var element = layui.element;
+            var layer = layui.layer;
+
+            //监听折叠
+            element.on('collapse(test)', function (data) {
+                layer.msg('展开状态：' + data.show);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

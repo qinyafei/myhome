@@ -83,77 +83,70 @@
   </div>
   <div class="layui-row">
     <div class="layui-col-md1">
-      <fieldset class="layui-elem-field">
+      <fieldset class="layui-elem-field" id="type-groupbtn">
         <legend>按钮组</legend>
         <div class="layui-btn-group">
-          <button type="button" class="layui-btn">垂直拼接</button>
-          <button type="button" class="layui-btn ">水平拼接</button>
+          <button type="button" class="layui-btn" data="vjoint" >垂直拼接</button>
+          <button type="button" class="layui-btn" data="hjoint" >水平拼接</button>
         </div>
         <div class="layui-btn-group" style="margin-top: 20px;">
-          <button type="button" class="layui-btn">横梃</button>
-          <button type="button" class="layui-btn ">竖梃</button>
+          <button type="button" class="layui-btn" data="hmullion">横梃</button>
+          <button type="button" class="layui-btn" data="vmullion">竖梃</button>
         </div>
       </fieldset>
     </div>
-    <div class="layui-col-md9">
-      <div id="main1"></div>
+    <div class="layui-col-md9" style="margin-top: 10px;">
+      <div id="main" style="width:900px;height:600px;margin-top:0;"></div>
     </div>
-    <div class="layui-col-md1 layui-col-md-offset9">
-      <table class="layui-table" lay-size="sm">
-        <colgroup>
-          <col width="60" height="15">
-          <col width="80" height="15">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>昵称</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>贤心</td>
-            <td>
-              <div class="layui-row">
-                <div class="layui-col-xs3">
-                  <input type="text" autocomplete="on" style="width: 80px;height: 25px;" placeholder="请输入"
-                    class="layui-input">
-                </div>
-                <div class="layui-col-xs3 layui-col-md-offset6">
-                  <button type="button" style="height: 25px;" class="layui-btn layui-btn-primary layui-btn-xs"
-                    id="testbtn">+</button>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>许闲心</td>
-            <td><input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入"
-                class="layui-input" style="width: 80px;height: 25px;"></td>
-          </tr>
-          <tr>
-            <td>sentsin</td>
-            <td>
-              <div class="layui-input-inline">
-                <select name="quiz2">
-                  <option value="">请选择市</option>
-                  <option value="杭州">杭州</option>
-                  <option value="宁波" disabled="">宁波</option>
-                  <option value="温州">温州</option>
-                  <option value="温州">台州</option>
-                  <option value="温州">绍兴</option>
-                </select>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="layui-col-md1">
+      <form class="layui-form" action="">
+        <div class="layui-form-item">
+          <label class="layui-form-label">单行输入框</label>
+          <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">验证必填项</label>
+          <input type="text" name="username" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入"
+            autocomplete="off" class="layui-input">
+        </div>
+
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label">验证手机</label>
+            <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">验证邮箱</label>
+            <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label">多规则验证</label>
+            <div class="layui-input-inline">
+              <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">验证日期</label>
+            <div class="layui-input-inline">
+              <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">验证链接</label>
+            <div class="layui-input-inline">
+              <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
     </div>
+  </div>
   </div>
 
   <script>
-    jQuery("#lay").click(function () {
-      layer.msg("点击事件");
-    });
 
   </script>
 

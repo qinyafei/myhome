@@ -13,7 +13,7 @@
 
 
 .layui-input {
-    width: 120px;
+    width: 100px;
     height:25px;
     margin-left: 50px;
     min-height: 20px
@@ -29,36 +29,11 @@
     width: 80px;
     padding: 5px 10px;
 }
- 
 
 .layui-table-cell {
-    height: 15px;
+    height:15px;
     line-height: 15px;
     width: 60px;
-}
-
-legend {
-    color:#302A2A;  
-    font: bold 16px/2 Verdana, Geneva, sans-serif;  
-    font-weight: bold;  
-    text-align: left;  
-    text-shadow: 2px 2px 2px rgb(88, 126, 156);  
-} 
-
-.layui-form-select dl{
-    z-index:9999;   
-}
-    
-.layui-table-cell{
-    overflow:visible;  
-}
-    
-.layui-table-box{
-    overflow:visible;
-}
-    
-.layui-table-body{
-    overflow:visible;
 }
 
 .wrap {

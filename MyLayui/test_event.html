@@ -1,0 +1,109 @@
+<!--
+ * @File: 
+ * @Brief: 
+ * @Version: 1.0.0
+ * @Author: xxx
+ * @Date: 2020-10-29 16:00:29
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui-v2.5.6/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="test.css" media="all">
+    <script src="layui-v2.5.6/layui/layui.js" charset="utf-8"></script>
+    <script src="../js/jquery-3.4.1.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+<body>
+    <!-- 不用form 用div也可以 -->
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">下拉选择框</label>
+            <div class="layui-input-block">
+                <select name="interest" lay-filter="aihao">
+                    <option value="0">写作</option>
+                    <option value="1">阅读</option>
+                    <option value="2">听歌</option>
+                    <option value="4">游戏</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">复选框</label>
+            <div class="layui-input-block" lay-filter="chkb">
+                <input type="checkbox" name="like[write]" title="写作">
+                <input type="checkbox" name="like[read]" title="阅读" checked="">
+                <input type="checkbox" name="like[game]" title="游戏">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">单选框</label>
+            <div class="layui-input-block" lay-filter="rd">
+                <input type="radio" name="sex" value="男" title="男" checked="">
+                <input type="radio" name="sex" value="女" title="女">
+                <input type="radio" name="sex" value="禁" title="禁用" disabled="">
+            </div>
+        </div>
+
+        <button lay-submit lay-filter="*">提交</button>
+    </form>
+
+    <div id="main" style="width:900px;height:600px;margin-top:0;"></div>
+
+
+    <script type="text/javascript">
+        layui.use('form', function () {
+            var form = layui.form;
+            form.on('select(aihao)', function (data) {
+                console.log(data);
+                console.log(data.elem); //得到select原始DOM对象
+                console.log(data.value); //得到被选中的值
+                console.log(data.othis); //得到美化后的DOM对象
+            });
+
+            form.on('checkbox(chkb)', function (data) {
+                console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //是否被选中，true或者false
+                console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+                console.log(data.othis); //得到美化后的DOM对象
+            });
+
+            form.on('radio(rd)', function (data) {
+                console.log(data.elem); //得到radio原始DOM对象
+                console.log(data.value); //被点击的radio的value值
+            });
+
+            form.on('submit(*)', function (data) {
+                console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+                console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+                console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+        });
+
+        jQuery(document).on('click', "#main", function () {
+            //layer.msg("按钮点击");
+            //alert("click");
+        });
+
+        jQuery(document).on('mouseup', "#main", function (e) {
+            var z = $(this);
+            //alert(z.width());//调整后的列宽
+            alert(e.clientX + ',' + e.clientY);
+        });
+
+
+    </script>
+
+</body>
+
+</html>

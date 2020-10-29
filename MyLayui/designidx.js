@@ -12,14 +12,23 @@ var objHistory = [];//保存历史记录，用于撤销操作
 window.onload = function () {
 
     //初始化
-    main = document.getElementById("main1");
+    main = document.getElementById("main");
     zr = zrender.init(main);
+/*
+    jQuery(document).on('mouseup', "#main", function (e) {
+        var z = $(this);
+        //alert(z.width());//调整后的列宽
+        alert(e.clientX + ',' + e.clientY);
+    });
+    */
+
 
     //
+    draw_rect(0, 0, main.style.width, main.style.height);
     init_design();
 
     //设置绘图类型按钮点击事件
-    $("#type-group button").click(function () {
+    $("#type-groupbtn button").click(function () {
         curType = this.getAttribute("data");
         //移除原有选中效果
         $("#type-group button").each(function () {
@@ -43,14 +52,14 @@ window.onload = function () {
         }
     });
 
-    
+
     //通过鼠标移动绘制图形
     main.onmousedown = function (e1) {
         var x0 = e1.offsetX;
         var y0 = e1.offsetY;
-        lineWidth = document.getElementById("lineWidth").value;
-        stroke = document.getElementById("stroke").value;
-        fill = document.getElementById("fill").value;
+        lineWidth = 1;//document.getElementById("lineWidth").value;
+        stroke = 1; //document.getElementById("stroke").value;
+        fill = 1;//document.getElementById("fill").value;
         main.onmousemove = function (e2) {
             var x1 = e2.offsetX;
             var y1 = e2.offsetY;
@@ -74,7 +83,7 @@ window.onload = function () {
             */
         }
     }
-    
+
 
     //图片拖拽上传
     main.ondragover = function (e) {
@@ -113,25 +122,11 @@ window.onload = function () {
 function drawing(x0, y0, x1, y1) {
     switch (curType) {
         case "hmullion"://
-            ret = design.probeHorEdge(x0, y0);
-            mul = new Mullion();
-            mul.begin.x = ret[0];
-            mul.begin.y = y0;
-            mul.end.x = ret[1];
-            mul.end.y = y0;
-            mul.type = 1;
-            design.addMullion(mul);
+            design.addMullion(x0, y0, 1);
             design.refresh();
             break;
         case "vmullion"://mullion
-            ret = design.probeVerEdge(x0, y0);
-            mul = new Mullion();
-            mul.begin.x = x0;
-            mul.begin.y = ret[0];
-            mul.end.x = x0;
-            mul.end.y = ret[1];
-            mul.type = 2;
-            design.addMullion(mul);
+            design.addMullion(x0, y0, 2);
             design.refresh();
             break;
         case "hjoint":
