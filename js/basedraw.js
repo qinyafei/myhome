@@ -14,7 +14,7 @@ function draw_line(x0, y0, x1, y1) {
         style: {
             lineWidth: 1,
             stroke: stroke
-        }
+        },
     });
 
     zr.add(line);

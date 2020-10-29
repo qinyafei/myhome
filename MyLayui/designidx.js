@@ -121,6 +121,10 @@ window.onload = function () {
  */
 function drawing(x0, y0, x1, y1) {
     switch (curType) {
+        case "select":
+            design.selectObj(x0, y0);
+            design.refresh();
+            break;
         case "hmullion"://
             design.addMullion(x0, y0, 1);
             design.refresh();

@@ -255,19 +255,13 @@ DesignFrame = function () {
     */
     this.selectObj = function (x, y) {
         this.mullions.map(function (value, index) {
-
+            value.ptIn(x, y);
         });
 
-        this.frames.map(function (value, index) {
-
-        });
+        this.frame.ptIn(x, y);
 
         this.windowFans.map(function (value, index) {
-
-        });
-
-        this.singleFans.map(function (value, index) {
-
+            value.ptIn(x, y);
         });
     };
 };
@@ -276,8 +270,8 @@ DesignFrame = function () {
 
 function init_design() {
     design = new DesignFrame();
-    design.frame.out_begin.x = 200;
-    design.frame.out_begin.y = 200;
+    design.frame.out_begin.x = 100;
+    design.frame.out_begin.y = 100;
     design.frame.out_end.x = 800;
     design.frame.out_end.y = 600;
 
@@ -287,9 +281,9 @@ function init_design() {
     design.frame.in_end.x = design.frame.out_end.x - span;
     design.frame.in_end.y = design.frame.out_end.y - span;
 
-    design.addMullion(400, 400, 1);
+    //design.addMullion(400, 400, 1);
 
-    design.addMullion(400, 400, 2);
+    //design.addMullion(400, 400, 2);
 
     design.draw();
 }

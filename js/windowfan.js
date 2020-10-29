@@ -40,11 +40,13 @@ WindowFan = function () {
         //选中内扇
         if (pointInRect(x, y, this.frame.in_begin, this.frame.in_end)) {
             draw_fill_rect(this.frame.in_begin.x, this.frame.in_begin.y,
-                 this.frame.in_end.x - this.frame_in_begin.x, this.frame.in_end.y - this.frame.in_begin.y);
+                 this.frame.in_end.x - this.frame.in_begin.x, this.frame.in_end.y - this.frame.in_begin.y);
         }
     };
 
     this.draw = function() {
-        this.frame.draw();
+        if (this.singleFans.length > 0) {
+            this.frame.draw();
+        }
     };
 };

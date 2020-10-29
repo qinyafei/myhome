@@ -13,14 +13,14 @@ Mullion = function () {
     this.ptIn = function (x, y) {
         //TODO:
         //横梃
-        if (type == 1) {
+        if (this.type == 1) {
             lt = this.pointArray[2];
             rb = this.pointArray[5];
             if (pointInRect(x, y, lt, rb)) {
                 fill_model(this.pointArray);
                 return true;
             }
-        } else if (type == 2) {
+        } else if (this.type == 2) {
             lt = this.pointArray[0];
             rb = this.pointArray[3];
             if (pointInRect(x, y, lt, rb)) {
@@ -111,7 +111,7 @@ Mullion = function () {
         draw_line(this.begin.x - topX, this.begin.y - botY, this.end.x + topX, this.begin.y - botY);
         draw_line(this.begin.x - topX, this.end.y + botY, this.end.x + topX, this.end.y + botY);
 
-        fill_model(this.pointArray);
+        //fill_model(this.pointArray);
     };
 
 
