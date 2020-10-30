@@ -35,24 +35,16 @@ DesignFrame = function () {
             verpt = this.probeVerEdge(x, y);
 
             winfan1 = new WindowFan();
-            winfan1.frame.out_begin.x = horpt[0];
-            winfan1.frame.out_begin.y = verpt[0];
-            winfan1.frame.out_end.x = horpt[1];
-            winfan1.frame.out_end.y = y;
-            winfan1.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
-            winfan1.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
-            winfan1.frame.in_end.x = winfan1.frame.out_end.x - frame_span;
-            winfan1.frame.in_end.y = winfan1.frame.out_end.y - frame_span;
+            winfan1.innerFan.begin.x = horpt[0];
+            winfan1.innerFan.begin.y = verpt[0];
+            winfan1.innerFan.end.x = horpt[1];
+            winfan1.innerFan.end.y = y - frame_span/2;
 
             winfan2 = new WindowFan();
-            winfan2.frame.out_begin.x = horpt[0];
-            winfan2.frame.out_begin.y = y;
-            winfan2.frame.out_end.x = horpt[1];
-            winfan2.frame.out_end.y = verpt[1];
-            winfan2.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
-            winfan2.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
-            winfan2.frame.in_end.x = winfan1.frame.out_end.x - frame_span;
-            winfan2.frame.in_end.y = winfan1.frame.out_end.y - frame_span;
+            winfan2.innerFan.begin.x = horpt[0];
+            winfan2.innerFan.begin.y = y + frame_span/2;
+            winfan2.innerFan.end.x = horpt[1];
+            winfan2.innerFan.end.y = verpt[1];
 
             this.windowFans.push(winfan1);
             this.windowFans.push(winfan2);

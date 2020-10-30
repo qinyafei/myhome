@@ -1,9 +1,14 @@
+/*
+ * @File: 
+ * @Brief: 
+ * @Version: 1.0.0
+ * @Author: xxx
+ * @Date: 2020-10-26 10:36:08
+ */
+
 /**
- * 外框绘制
+ * 扇框绘制
 */
-
-
-//框
 WindowFrame = function() {
     this.out_begin = new Point();
     this.out_end = new Point();

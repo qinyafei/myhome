@@ -1,3 +1,10 @@
+/*
+ * @File: 
+ * @Brief: 
+ * @Version: 1.0.0
+ * @Author: xxx
+ * @Date: 2020-10-26 10:36:08
+ */
 Point = function () {
     this.x = 0;
     this.y = 0;
@@ -53,7 +60,11 @@ Corner = function() {
     this.rdivide = new DivideLine();
 };
 
-
+//扇内(未开扇的扇框内部矩形)，同玻璃类似
+InnerFan = function() {
+    this.begin = new Point();
+    this.end = new Point();
+};
 
 //开扇的单个扇边
 //有可能是多边形

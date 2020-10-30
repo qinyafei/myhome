@@ -11,8 +11,8 @@
  * 注意：有可能是多边形
 */ 
 WindowFan = function () {
-    //外框 windowframe
-    this.frame = new WindowFrame();
+    //内扇(未开扇)
+    this.innerFan = new InnerFan();
     //单扇边数组: 扇边和外框结构体定义一致
     this.singleFans = [];
 
@@ -38,15 +38,15 @@ WindowFan = function () {
         });
 
         //选中内扇
-        if (pointInRect(x, y, this.frame.in_begin, this.frame.in_end)) {
-            draw_fill_rect(this.frame.in_begin.x, this.frame.in_begin.y,
-                 this.frame.in_end.x - this.frame.in_begin.x, this.frame.in_end.y - this.frame.in_begin.y);
+        if (pointInRect(x, y, this.innerFan.begin, this.innerFan.end)) {
+            draw_fill_rect(this.innerFan.begin.x, this.innerFan.begin.y,
+                 this.innerFan.end.x - this.innerFan.begin.x, this.innerFan.end.y - this.innerFan.begin.y);
         }
     };
 
     this.draw = function() {
         if (this.singleFans.length > 0) {
-            this.frame.draw();
+            //this.innerFan.draw();
         }
     };
 };

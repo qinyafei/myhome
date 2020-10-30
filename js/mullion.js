@@ -45,6 +45,43 @@ Mullion = function () {
      * 绘制横梃
     */
     this.draw_hmullion = function () {
+               //向左箭头
+               arx = this.begin.x - frame_span/2;
+               ary = this.begin.y;
+
+               pt1 = new Point();
+               pt1.x = this.begin.x;
+               pt1.y = this.begin.y - frame_span/2;
+               draw_line(pt1.x, pt1.y, arx, ary);
+
+               start = new Point();
+               start.x = pt1.x;
+               start.y = pt1.y;
+
+               this.pointArray.push(pt1);
+               this.pointArray.push(new Point(arx, ary));
+
+               pt1.x = this.begin.x;
+               pt1.y = this.begin.y + frame_span/2;
+               draw_line(arx, ary, pt1.x, pt1.y);
+               this.pointArray.push(pt1);
+
+               pt2 = new Point(this.end.x, this.end.y+frame_span/2);
+               draw_line(pt1.x, pt1.y, pt2.x, pt2.y);
+               this.pointArray.push(pt2);
+
+               arx = this.end.x + frame_span/2;
+               ary = this.end.y;
+               draw_line(pt2.x, pt2.y, arx, ary);
+               this.pointArray.push(new Point(arx, ary));
+
+               pt2.x = this.end.x;
+               pt2.y = this.end.y - frame_span/2;
+               draw_line(arx, ary, pt2.x, pt2.y);
+               draw_line(pt2.x, pt2.y, start.x, start.y);
+               this.pointArray.push(start);
+
+               /*
         theta = 25;
         headlen = 10;
         textlen = 20;
@@ -112,6 +149,7 @@ Mullion = function () {
         draw_line(this.begin.x - topX, this.end.y + botY, this.end.x + topX, this.end.y + botY);
 
         //fill_model(this.pointArray);
+        */
     };
 
 
