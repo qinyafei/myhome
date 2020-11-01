@@ -14,15 +14,15 @@ Mullion = function () {
         //TODO:
         //横梃
         if (this.type == 1) {
-            lt = this.pointArray[2];
-            rb = this.pointArray[5];
+            lt = new Point(this.pointArray[0][0], this.pointArray[0][1]);
+            rb = new Point(this.pointArray[3][0], this.pointArray[3][1]);
             if (pointInRect(x, y, lt, rb)) {
                 fill_model(this.pointArray);
                 return true;
             }
         } else if (this.type == 2) {
-            lt = this.pointArray[0];
-            rb = this.pointArray[3];
+            lt = new Point(this.pointArray[2][0], this.pointArray[2][1]);
+            rb = new Point(this.pointArray[5][0], this.pointArray[5][1]);
             if (pointInRect(x, y, lt, rb)) {
                 fill_model(this.pointArray);
                 return true;
@@ -32,7 +32,7 @@ Mullion = function () {
         return false;
     };
 
-    this.draw = function() {
+    this.draw = function () {
         if (this.type == 1) {
             this.draw_hmullion();
         } else if (this.type == 2) {
@@ -40,116 +40,108 @@ Mullion = function () {
         }
     };
 
+    this.init = function (x0, y0, x1, y1, t) {
+        this.begin.x = x0;
+        this.begin.y = y0;
+        this.end.x = x1;
+        this.end.y = y1;
+        this.type = t;
+
+        if (this.type == 1) {
+            arx = this.begin.x + frame_span / 2;
+            ary = this.begin.y;
+
+            pt1 = new Point();
+            pt1.x = this.begin.x + frame_span;
+            pt1.y = this.begin.y - frame_span / 2;
+
+            start = new Point();
+            start.x = pt1.x;
+            start.y = pt1.y;
+
+            this.pointArray.push([pt1.x, pt1.y]);
+            this.pointArray.push([arx, ary]);
+
+            pt1.x = this.begin.x + frame_span;
+            pt1.y = this.begin.y + frame_span / 2;
+            this.pointArray.push([pt1.x, pt1.y]);
+
+            pt2 = new Point(this.end.x - frame_span, this.end.y + frame_span / 2);
+            this.pointArray.push([pt2.x, pt2.y]);
+
+            arx = this.end.x - frame_span / 2;
+            ary = this.end.y;
+            this.pointArray.push([arx, ary]);
+
+            pt2.x = this.end.x - frame_span;
+            pt2.y = this.end.y - frame_span / 2;
+            this.pointArray.push([pt2.x, pt2.y]);
+            this.pointArray.push([start.x, start.y]);
+        } else if (this.type == 2) {
+            arx = this.begin.x;
+            ary = this.begin.y + frame_span / 2;
+
+            pt1 = new Point();
+            pt1.x = this.begin.x + frame_span / 2;;
+            pt1.y = this.begin.y + frame_span;
+
+            start = new Point();
+            start.x = pt1.x;
+            start.y = pt1.y;
+
+            this.pointArray.push([pt1.x, pt1.y]);
+            this.pointArray.push([arx, ary]);
+
+            pt1.x = this.begin.x - frame_span / 2;
+            pt1.y = this.begin.y + frame_span;
+            this.pointArray.push([pt1.x, pt1.y]);
+
+            pt2 = new Point(this.end.x - frame_span / 2, this.end.y - frame_span);
+            this.pointArray.push([pt2.x, pt2.y]);
+
+            arx = this.end.x;
+            ary = this.end.y - frame_span / 2;
+            this.pointArray.push([arx, ary]);
+
+            pt2.x = this.end.x + frame_span / 2;
+            pt2.y = this.end.y - frame_span;
+            this.pointArray.push([pt2.x, pt2.y]);
+            this.pointArray.push([start.x, start.y]);
+        }
+    };
 
     /**
      * 绘制横梃
     */
     this.draw_hmullion = function () {
-               //向左箭头
-               arx = this.begin.x - frame_span/2;
-               ary = this.begin.y;
-
-               pt1 = new Point();
-               pt1.x = this.begin.x;
-               pt1.y = this.begin.y - frame_span/2;
-               draw_line(pt1.x, pt1.y, arx, ary);
-
-               start = new Point();
-               start.x = pt1.x;
-               start.y = pt1.y;
-
-               this.pointArray.push(pt1);
-               this.pointArray.push(new Point(arx, ary));
-
-               pt1.x = this.begin.x;
-               pt1.y = this.begin.y + frame_span/2;
-               draw_line(arx, ary, pt1.x, pt1.y);
-               this.pointArray.push(pt1);
-
-               pt2 = new Point(this.end.x, this.end.y+frame_span/2);
-               draw_line(pt1.x, pt1.y, pt2.x, pt2.y);
-               this.pointArray.push(pt2);
-
-               arx = this.end.x + frame_span/2;
-               ary = this.end.y;
-               draw_line(pt2.x, pt2.y, arx, ary);
-               this.pointArray.push(new Point(arx, ary));
-
-               pt2.x = this.end.x;
-               pt2.y = this.end.y - frame_span/2;
-               draw_line(arx, ary, pt2.x, pt2.y);
-               draw_line(pt2.x, pt2.y, start.x, start.y);
-               this.pointArray.push(start);
-
-               /*
-        theta = 25;
-        headlen = 10;
-        textlen = 20;
-
-        edge = 100;
-
         //向左箭头
-        fromX = this.begin.x + edge;
-        fromY = this.begin.y;
-        toX = this.begin.x;
-        toY = this.begin.y;
+        arx = this.begin.x + frame_span / 2;
+        ary = this.begin.y;
 
-        // 计算各角度和对应的P2,P3坐标
-        var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
-            angle1 = (angle + theta) * Math.PI / 180,
-            angle2 = (angle - theta) * Math.PI / 180,
-            topX = headlen * Math.cos(angle1),
-            topY = headlen * Math.sin(angle1),
-            botX = headlen * Math.cos(angle2),
-            botY = headlen * Math.sin(angle2);
+        pt1 = new Point();
+        pt1.x = this.begin.x + frame_span;
+        pt1.y = this.begin.y - frame_span / 2;
+        draw_line(pt1.x, pt1.y, arx, ary);
 
-        var arrowX = toX + topX,
-            arrowY = toY + topY;
-        draw_line(arrowX, arrowY, toX, toY);
-        //保存起始点
-        var startx = arrowX;
-        var starty = arrowY;
+        start = new Point();
+        start.x = pt1.x;
+        start.y = pt1.y;
 
-        this.pointArray.push([arrowX, arrowY]);
-        this.pointArray.push([toX, toY]);
+        pt1.x = this.begin.x + frame_span;
+        pt1.y = this.begin.y + frame_span / 2;
+        draw_line(arx, ary, pt1.x, pt1.y);
 
-        arrowX = toX + botX;
-        arrowY = toY + botY;
-        draw_line(toX, toY, arrowX, arrowY);
-        this.pointArray.push([arrowX, arrowY]);
+        pt2 = new Point(this.end.x - frame_span, this.end.y + frame_span / 2);
+        draw_line(pt1.x, pt1.y, pt2.x, pt2.y);
 
-        //画向右箭头
-        fromX = this.end.x - edge;
-        fromY = this.end.y;
-        toX = this.end.x;
-        toY = this.end.y;
+        arx = this.end.x - frame_span / 2;
+        ary = this.end.y;
+        draw_line(pt2.x, pt2.y, arx, ary);
 
-        var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
-            angle1 = (angle + theta) * Math.PI / 180,
-            angle2 = (angle - theta) * Math.PI / 180,
-            topX = headlen * Math.cos(angle1),
-            topY = headlen * Math.sin(angle1),
-            botX = headlen * Math.cos(angle2),
-            botY = headlen * Math.sin(angle2);
-
-        var arrowX = toX + topX,
-            arrowY = toY + topY;
-        draw_line(arrowX, arrowY, toX, toY);
-        this.pointArray.push([arrowX, arrowY]);
-        this.pointArray.push([toX, toY]);
-
-        arrowX = toX + botX;
-        arrowY = toY + botY;
-        draw_line(toX, toY, arrowX, arrowY);
-        this.pointArray.push([arrowX, arrowY]);
-
-        this.pointArray.push(startx, starty);
-
-        draw_line(this.begin.x - topX, this.begin.y - botY, this.end.x + topX, this.begin.y - botY);
-        draw_line(this.begin.x - topX, this.end.y + botY, this.end.x + topX, this.end.y + botY);
-
-        //fill_model(this.pointArray);
-        */
+        pt2.x = this.end.x - frame_span;
+        pt2.y = this.end.y - frame_span / 2;
+        draw_line(arx, ary, pt2.x, pt2.y);
+        draw_line(pt2.x, pt2.y, start.x, start.y);
     };
 
 
@@ -157,72 +149,34 @@ Mullion = function () {
      * 绘制竖梃
     */
     this.draw_vmullion = function () {
-        theta = 30;
-        headlen = 10;
-        textlen = 20;
-
-        edge = 100;
-
         //向上箭头
-        fromX = this.begin.x;
-        fromY = this.begin.y + edge;
-        toX = this.begin.x;
-        toY = this.begin.y;
+        arx = this.begin.x;
+        ary = this.begin.y + frame_span / 2;
 
-        // 计算各角度和对应的P2,P3坐标
-        var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
-            angle1 = (angle + theta) * Math.PI / 180,
-            angle2 = (angle - theta) * Math.PI / 180,
-            topX = headlen * Math.cos(angle1),
-            topY = headlen * Math.sin(angle1),
-            botX = headlen * Math.cos(angle2),
-            botY = headlen * Math.sin(angle2);
+        pt1 = new Point();
+        pt1.x = this.begin.x + frame_span / 2;;
+        pt1.y = this.begin.y + frame_span;
+        draw_line(pt1.x, pt1.y, arx, ary);
 
-        var arrowX = toX + topX,
-            arrowY = toY + topY;
-        draw_line(arrowX, arrowY, toX, toY);
-        this.pointArray.push([arrowX, arrowY]);
-        this.pointArray.push([toX, toY]);
+        start = new Point();
+        start.x = pt1.x;
+        start.y = pt1.y;
 
-        //保存起始点
-        var startx = arrowX;
-        var starty = arrowY;
+        pt1.x = this.begin.x - frame_span / 2;
+        pt1.y = this.begin.y + frame_span;
+        draw_line(arx, ary, pt1.x, pt1.y);
 
-        arrowX = toX + botX;
-        arrowY = toY + botY;
-        draw_line(toX, toY, arrowX, arrowY);
-        this.pointArray.push([arrowX, arrowY]);
 
-        //画向右箭头
-        fromX = this.end.x;
-        fromY = this.end.y - edge;
-        toX = this.end.x;
-        toY = this.end.y;
+        pt2 = new Point(this.end.x - frame_span / 2, this.end.y - frame_span);
+        draw_line(pt1.x, pt1.y, pt2.x, pt2.y);
 
-        var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
-            angle1 = (angle + theta) * Math.PI / 180,
-            angle2 = (angle - theta) * Math.PI / 180,
-            topX = headlen * Math.cos(angle1),
-            topY = headlen * Math.sin(angle1),
-            botX = headlen * Math.cos(angle2),
-            botY = headlen * Math.sin(angle2);
+        arx = this.end.x;
+        ary = this.end.y - frame_span / 2;
+        draw_line(pt2.x, pt2.y, arx, ary);
 
-        var arrowX = toX + topX,
-            arrowY = toY + topY;
-        draw_line(arrowX, arrowY, toX, toY);
-        this.pointArray.push([arrowX, arrowY]);
-        this.pointArray.push([toX, toY]);
-
-        arrowX = toX + botX;
-        arrowY = toY + botY;
-        draw_line(toX, toY, arrowX, arrowY);
-        this.pointArray.push([arrowX, arrowY]);
-
-        this.pointArray.push(startx, starty);
-
-        //toX <0, boY < 0
-        draw_line(this.begin.x - topX, this.begin.y - botY, this.end.x - topX, this.end.y + botY);
-        draw_line(this.begin.x + topX, this.begin.y - botY, this.end.x + topX, this.end.y + botY);
-
+        pt2.x = this.end.x + frame_span / 2;
+        pt2.y = this.end.y - frame_span;
+        draw_line(arx, ary, pt2.x, pt2.y);
+        draw_line(pt2.x, pt2.y, start.x, start.y);
     };
 };

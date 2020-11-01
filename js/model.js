@@ -5,9 +5,9 @@
  * @Author: xxx
  * @Date: 2020-10-26 10:36:08
  */
-Point = function () {
-    this.x = 0;
-    this.y = 0;
+Point = function (x0, y0) {
+    this.x = x0;
+    this.y = y0;
 };
 
 /**

@@ -72,31 +72,71 @@ function draw_vdimensioning(dimen) {
  * 选中状态门框绘制
 */
 function fill_frame(frame) {
+    if (cur_selector != undefined) {
+        cur_selector.map(function (value, index) {
+            zr.remove(value)
+        });
+    }
 
-    draw_fill_rect(frame.out_begin.x, frame.out_begin.y, frame.out_end.x - frame.out_begin.x,
+    rc1 = fill_rect(frame.out_begin.x, frame.out_begin.y, frame.out_end.x - frame.out_begin.x,
         frame.in_begin.y - frame.out_begin.y);
+    cur_selector.push(rc1);
 
-    draw_fill_rect(frame.in_end.x, frame.in_begin.y, frame.out_end.x - frame.in_end.x,
+    rc2 = fill_rect(frame.in_end.x, frame.in_begin.y, frame.out_end.x - frame.in_end.x,
         frame.in_end.y - frame.in_begin.y);
+    cur_selector.push(rc2);
 
-    draw_fill_rect(frame.out_begin.x, frame.in_end.y, frame.out_end.x - frame.out_begin.x,
+    rc3 = fill_rect(frame.out_begin.x, frame.in_end.y, frame.out_end.x - frame.out_begin.x,
         frame.out_end.y - frame.in_end.y);
+    cur_selector.push(rc3);
 
-    draw_fill_rect(frame.out_begin.x, frame.in_begin.y, frame.in_begin.x - frame.out_begin.x,
+    rc4 = fill_rect(frame.out_begin.x, frame.in_begin.y, frame.in_begin.x - frame.out_begin.x,
         frame.in_end.y - frame.in_begin.y);
-
+    cur_selector.push(rc4);
 }
 
 /**
  * 选中状态梃绘制
 */
 function fill_model(pointArray) {
+    if (cur_selector != undefined) {
+        cur_selector.map(function (value, index) {
+            zr.remove(value)
+        });
+    }
+
     obj = new zrender.Polygon({
         shape: {
             points: pointArray
-        }
+        },
+        style:{ fill:'#708090' }
     });
 
     zr.add(obj)
+
+    cur_selector.push(obj);
 }
 
+
+/**
+ * 填充矩形框
+*/
+function fill_rect(x, y, width, height) {
+    var rect = new zrender.Rect({
+        style: {
+            fill: '#708090',      //填充颜色
+            stroke: 'none'    //描边颜色
+        },
+        shape: {
+            x: x,           //x,y代表坐标
+            y: y,
+            width: width,
+            height: height,
+            // r: [3]            //圆角
+        },
+        z: 1                   //层次，大的会覆盖小的
+    });
+
+    zr.add(rect);
+    return rect;
+}

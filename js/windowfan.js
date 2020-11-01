@@ -9,7 +9,7 @@
 /**
  * 开扇一般由：外框/单扇边/玻璃组成
  * 注意：有可能是多边形
-*/ 
+*/
 WindowFan = function () {
     //内扇(未开扇)
     this.innerFan = new InnerFan();
@@ -32,19 +32,32 @@ WindowFan = function () {
     };
 
     this.ptIn = function (x, y) {
+        isIn = false;
         //selete singlefan
         this.singleFans.map(function (value, index) {
-            value.ptIn(x, y);
+            if (value.ptIn(x, y)) {
+                fill_frame(value)
+                return true;
+            }
         });
 
         //选中内扇
         if (pointInRect(x, y, this.innerFan.begin, this.innerFan.end)) {
-            draw_fill_rect(this.innerFan.begin.x, this.innerFan.begin.y,
-                 this.innerFan.end.x - this.innerFan.begin.x, this.innerFan.end.y - this.innerFan.begin.y);
+            if (cur_selector != undefined) {
+                cur_selector.map(function (value, index) {
+                    zr.remove(value)
+                });
+            }
+
+            rc = fill_rect(this.innerFan.begin.x, this.innerFan.begin.y,
+                this.innerFan.end.x - this.innerFan.begin.x, this.innerFan.end.y - this.innerFan.begin.y);
+            cur_selector.push(rc);
+            return true;
         }
+        return false;
     };
 
-    this.draw = function() {
+    this.draw = function () {
         if (this.singleFans.length > 0) {
             //this.innerFan.draw();
         }

@@ -8,6 +8,7 @@
 
 
 var design;
+var cur_selector = [];
 
 /**
  * 设计绘图：一扇窗主要由：外框/梃/拼接/开扇组成
@@ -21,72 +22,84 @@ DesignFrame = function () {
     //拼接数组
     this.joints = [];
 
+    this.init = function (x, y, wid, hei) {
+        this.frame.out_begin.x = x;
+        this.frame.out_begin.y = y;
+        this.frame.out_end.x = x + wid;
+        this.frame.out_end.y = y + hei;
+
+        this.frame.in_begin.x = design.frame.out_begin.x + frame_span;
+        this.frame.in_begin.y = design.frame.out_begin.y + frame_span;
+        this.frame.in_end.x = design.frame.out_end.x - frame_span;
+        this.frame.in_end.y = design.frame.out_end.y - frame_span;
+
+        winfan = new WindowFan();
+        winfan.innerFan.begin.x = this.frame.in_begin.x;
+        winfan.innerFan.begin.y = this.frame.in_begin.y;
+        winfan.innerFan.end.x = this.frame.in_end.x;
+        winfan.innerFan.end.y = this.frame.in_end.y;
+        this.windowFans.push(winfan);
+    };
+
     this.addMullion = function (x, y, type) {
+        var winfan1, winfan2;
+
         //横梃分割
         if (type == 1) {
             horpt = this.probeHorEdge(x, y);
             mul = new Mullion();
-            mul.begin.x = horpt[0];
-            mul.begin.y = y;
-            mul.end.x = horpt[1];
-            mul.end.y = y;
-            mul.type = type;
+            mul.init(horpt[0], y, horpt[1], y, type);
+            this.mullions.push(mul);
 
             verpt = this.probeVerEdge(x, y);
 
             winfan1 = new WindowFan();
-            winfan1.innerFan.begin.x = horpt[0];
-            winfan1.innerFan.begin.y = verpt[0];
-            winfan1.innerFan.end.x = horpt[1];
-            winfan1.innerFan.end.y = y - frame_span/2;
+            winfan1.innerFan.begin.x = horpt[0] + frame_span;
+            winfan1.innerFan.begin.y = verpt[0] + frame_span;
+            winfan1.innerFan.end.x = horpt[1] - frame_span;
+            winfan1.innerFan.end.y = y - frame_span / 2;
 
             winfan2 = new WindowFan();
-            winfan2.innerFan.begin.x = horpt[0];
-            winfan2.innerFan.begin.y = y + frame_span/2;
-            winfan2.innerFan.end.x = horpt[1];
-            winfan2.innerFan.end.y = verpt[1];
-
-            this.windowFans.push(winfan1);
-            this.windowFans.push(winfan2);
-            this.mullions.push(mul);
+            winfan2.innerFan.begin.x = horpt[0] + frame_span;
+            winfan2.innerFan.begin.y = y + frame_span / 2;
+            winfan2.innerFan.end.x = horpt[1] - frame_span;
+            winfan2.innerFan.end.y = verpt[1] - frame_span;
         }
 
         //竖梃分割
         if (type == 2) {
             verpt = this.probeVerEdge(x, y);
             mul = new Mullion();
-            mul.begin.x = x;
-            mul.begin.y = verpt[0];
-            mul.end.x = x;
-            mul.end.y = verpt[1];
-            mul.type = type;
+            mul.init(x, verpt[0], x, verpt[1], type);
 
             horpt = this.probeHorEdge(x, y);
 
             winfan1 = new WindowFan();
-            winfan1.frame.out_begin.x = horpt[0];
-            winfan1.frame.out_begin.y = verpt[0];
-            winfan1.frame.out_end.x = x;
-            winfan1.frame.out_end.y = verpt[1];
-            winfan1.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
-            winfan1.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
-            winfan1.frame.in_end.x = winfan1.frame.out_end.x - frame_span;
-            winfan1.frame.in_end.y = winfan1.frame.out_end.y - frame_span;
+            winfan1.innerFan.begin.x = horpt[0] + frame_span;
+            winfan1.innerFan.begin.y = verpt[0] + frame_span;
+            winfan1.innerFan.end.x = x - frame_span / 2;
+            winfan1.innerFan.end.y = verpt[1] - frame_span;
 
             winfan2 = new WindowFan();
-            winfan2.frame.out_begin.x = x;
-            winfan2.frame.out_begin.y = verpt[0];
-            winfan2.frame.out_end.x = horpt[1];
-            winfan2.frame.out_end.y = verpt[1];
-            winfan2.frame.in_begin.x = winfan1.frame.out_begin.x + frame_span;
-            winfan2.frame.in_begin.y = winfan1.frame.out_begin.y + frame_span;
-            winfan2.frame.in_end.x = winfan1.frame.out_end.x - frame_span;
-            winfan2.frame.in_end.y = winfan1.frame.out_end.y - frame_span;
+            winfan2.innerFan.begin.x = x + frame_span / 2;
+            winfan2.innerFan.begin.y = verpt[0] + frame_span;
+            winfan2.innerFan.end.x = horpt[1] - frame_span;
+            winfan2.innerFan.end.y = verpt[1] - frame_span;
 
-            this.windowFans.push(winfan1);
-            this.windowFans.push(winfan2);
             this.mullions.push(mul);
         }
+
+        //删除原fan
+        for (var i = 0; i < this.windowFans.length; i++) {
+            if (pointInRect(x, y, this.windowFans[i].innerFan.begin, this.windowFans[i].innerFan.end)) {
+                this.windowFans.splice(i, 1);
+                break;
+            }
+        }
+
+        //最后添加新fan
+        this.windowFans.push(winfan1);
+        this.windowFans.push(winfan2);
 
     }
 
@@ -171,11 +184,11 @@ DesignFrame = function () {
             if (value.type == 2) {
                 if (value.begin.x < x) {
                     if (x - value.begin.x <= beginSpan && y >= value.begin.y && y <= value.end.y) {
-                        beginSpan = x - value.begin.x;
+                        beginSpan = x - value.begin.x + frame_span / 2;
                     }
                 } else if (value.begin.x > x) {
                     if (value.begin.x - x < endSpan && y >= value.begin.y && y <= value.end.y) {
-                        endSpan = value.begin.x - x;
+                        endSpan = value.begin.x - x + frame_span / 2;
                     }
                 }
             }
@@ -186,11 +199,11 @@ DesignFrame = function () {
             if (value.type == 2) {
                 if (value.begin.x < x) {
                     if (x - value.begin.x <= beginSpan && y >= value.begin.y && y <= value.end.y) {
-                        beginSpan = x - value.begin.x;
+                        beginSpan = x - value.begin.x + frame_span / 2;
                     }
                 } else if (value.begin.x > x) {
                     if (value.begin.x - x < endSpan && y >= value.begin.y && y <= value.end.y) {
-                        endSpan = value.begin.x - x;
+                        endSpan = value.begin.x + frame_span / 2;
                     }
                 }
             }
@@ -213,11 +226,11 @@ DesignFrame = function () {
             if (value.type == 1) {
                 if (value.begin.y < y) {
                     if (y - value.begin.y <= beginSpan && x >= value.begin.x && x <= value.end.x) {
-                        beginSpan = y - value.begin.y;
+                        beginSpan = y - value.begin.y + frame_span / 2;
                     }
                 } else if (value.begin.y > y) {
                     if (value.begin.y - y < endSpan && x >= value.begin.x && x <= value.end.x) {
-                        endSpan = value.begin.y - y;
+                        endSpan = value.begin.y - y + frame_span / 2;
                     }
                 }
             }
@@ -228,11 +241,11 @@ DesignFrame = function () {
             if (value.type == 1) {
                 if (value.begin.y < y) {
                     if (y - value.begin.y <= beginSpan && x >= value.begin.x && x <= value.end.x) {
-                        beginSpan = y - value.begin.y;
+                        beginSpan = y - value.begin.y + frame_span / 2;
                     }
                 } else if (value.begin.y > y) {
                     if (value.begin.y - y < endSpan && x >= value.begin.x && x <= value.end.x) {
-                        endSpan = value.begin.y - y;
+                        endSpan = value.begin.y - y + frame_span / 2;
                     }
                 }
             }
@@ -246,14 +259,21 @@ DesignFrame = function () {
     * 根据坐标判定选中的实体
     */
     this.selectObj = function (x, y) {
+        isIn = false;
         this.mullions.map(function (value, index) {
-            value.ptIn(x, y);
+            if (value.ptIn(x, y)) {
+                return;
+            }
         });
 
-        this.frame.ptIn(x, y);
+        if (this.frame.ptIn(x, y)) {
+            return;
+        }
 
         this.windowFans.map(function (value, index) {
-            value.ptIn(x, y);
+            if (value.ptIn(x, y) == true) {
+                return;
+            }
         });
     };
 };
@@ -262,16 +282,7 @@ DesignFrame = function () {
 
 function init_design() {
     design = new DesignFrame();
-    design.frame.out_begin.x = 100;
-    design.frame.out_begin.y = 100;
-    design.frame.out_end.x = 800;
-    design.frame.out_end.y = 600;
-
-    span = 10;
-    design.frame.in_begin.x = design.frame.out_begin.x + span;
-    design.frame.in_begin.y = design.frame.out_begin.y + span;
-    design.frame.in_end.x = design.frame.out_end.x - span;
-    design.frame.in_end.y = design.frame.out_end.y - span;
+    design.init(100, 100, 700, 500);
 
     //design.addMullion(400, 400, 1);
 

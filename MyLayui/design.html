@@ -103,7 +103,7 @@
     <div class="layui-col-md9" style="margin-top: 10px;">
       <div id="main" style="width:900px;height:700px;margin-top:0;"></div>
     </div>
-    <div class="layui-col-md1">
+    <div class="layui-col-md1" id="win_property">
       <form class="layui-form" action="">
         <div class="layui-form-item">
           <label class="layui-form-label">单行输入框</label>
@@ -115,15 +115,11 @@
             autocomplete="off" class="layui-input">
         </div>
 
-        <div class="layui-form-item">
-          <div class="layui-inline">
+        <div class="layui-form-item" id="phone">
             <label class="layui-form-label">验证手机</label>
             <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
-          </div>
-          <div class="layui-inline">
             <label class="layui-form-label">验证邮箱</label>
             <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
-          </div>
         </div>
 
         <div class="layui-form-item">

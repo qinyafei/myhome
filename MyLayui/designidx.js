@@ -9,18 +9,29 @@ var fill = "#00000000"; //填充颜色
 var n = 3; //正多边形边数
 var objHistory = [];//保存历史记录，用于撤销操作
 
+function visibilityHideUI(id) {
+    var ui = document.getElementById(id); ui.style.visibility = "hidden";
+}
+
+function visibilityShowUI(id) {
+    var ui = document.getElementById(id); ui.style.visibility = "visible";
+}
+
 window.onload = function () {
 
     //初始化
     main = document.getElementById("main");
     zr = zrender.init(main);
-/*
-    jQuery(document).on('mouseup', "#main", function (e) {
-        var z = $(this);
-        //alert(z.width());//调整后的列宽
-        alert(e.clientX + ',' + e.clientY);
-    });
-    */
+
+    //visibilityHideUI("win_property");
+    visibilityHideUI("phone");
+    /*
+        jQuery(document).on('mouseup', "#main", function (e) {
+            var z = $(this);
+            //alert(z.width());//调整后的列宽
+            alert(e.clientX + ',' + e.clientY);
+        });
+        */
 
 
     //
