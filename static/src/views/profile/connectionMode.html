@@ -1,0 +1,170 @@
+<title>开启头部工具栏 - 数据表格</title>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">型材系列库</div>
+        <div class="layui-card-body">
+          <div class="test-table-reload-btn" style="margin-bottom: 10px;">
+            系列名称：
+            <div class="layui-inline">
+              <input class="layui-input" name="id" id="test-table-demoReload" autocomplete="off">
+            </div>
+            厂家：
+            <div class="layui-inline">
+              <input class="layui-input" name="phone" type="text">
+            </div>
+            <button class="layui-btn" data-type="reload">搜索</button>
+          </div>
+          <table class="layui-hide" id="test-table-toolbar" lay-filter="test-table-toolbar"></table>
+
+          <script type="text/html" id="test-table-toolbar-toolbarDemo">
+              <div class="layui-btn-container">
+                <button id="openAddModel" class="layui-btn layui-btn-sm">新增</button>
+                <!-- <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+                <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+              </div>
+            </script>
+
+          <script type="text/html" id="test-table-toolbar-barDemo">
+              <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+              <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+              <a class="layui-btn layui-btn-xs" lay-event="edit">确认下单</a>
+              <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<form class="layui-form" id="addModel" style="display:none; margin:20px 0 0 80px;">
+  <div class="layui-form-item">
+    <label class="layui-form-label">系列名称</label>
+    <div class="layui-input-inline">
+      <input type="text" name="createPerson" required lay-verify="required" placeholder="请输入创建人" autocomplete="on"
+        class="layui-input" id="createPerson">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">厂家</label>
+    <div class="layui-input-inline">
+      <input type="text" class="layui-input" id="createDate" placeholder="开始时间">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">扇水平搭接量</label>
+    <div class="layui-input-inline">
+      <input type="text" name="customerName" required lay-verify="required" placeholder="请输入客户姓名" autocomplete="on"
+        class="layui-input" id="customerName">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">扇垂直搭接量</label>
+    <div class="layui-input-inline">
+      <input type="text" name="customerPhone" required lay-verify="required" placeholder="请输入客户电话" autocomplete="on"
+        class="layui-input" id="customerPhone">
+    </div>
+  </div>
+</form>
+<script>
+  layui.use(['admin', 'table', 'laydate'], function () {
+    var $ = layui.jquery
+      , admin = layui.admin
+      , table = layui.table
+      , laydate = layui.laydate;
+
+    table.render({
+      elem: '#test-table-toolbar'
+      , url: './json/table/demo.js'
+      , toolbar: '#test-table-toolbar-toolbarDemo'
+      , title: '用户数据表'
+      , cols: [[
+        { type: 'checkbox', fixed: 'left' }
+        , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true }
+        , { field: 'username', title: '系列名称', width: 120, edit: 'text' }
+        , { field: 'sex', title: '厂家', width: 80, edit: 'text', sort: true }
+        , { field: 'city', title: '扇水平搭接量', width: 100 }
+        , { field: 'sign', title: '扇垂直搭接量' }
+      ]]
+      , page: true
+    });
+
+    //头工具栏事件
+    table.on('toolbar(test-table-toolbar)', function (obj) {
+      var checkStatus = table.checkStatus(obj.config.id);
+      switch (obj.event) {
+        case 'getCheckData':
+          var data = checkStatus.data;
+          layer.alert(JSON.stringify(data));
+          break;
+        case 'getCheckLength':
+          var data = checkStatus.data;
+          layer.msg('选中了：' + data.length + ' 个');
+          break;
+        case 'isAll':
+          layer.msg(checkStatus.isAll ? '全选' : '未全选');
+          break;
+      };
+    });
+
+    //监听行工具事件
+    table.on('tool(test-table-toolbar)', function (obj) {
+      var data = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除行么', function (index) {
+          obj.del();
+          layer.close(index);
+        });
+      } else if (obj.event === 'edit') {
+        layer.prompt({
+          formType: 2
+          , value: data.email
+        }, function (value, index) {
+          obj.update({
+            email: value
+          });
+          layer.close(index);
+        });
+      }
+    });
+
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#startDate' //指定元素
+    });
+    laydate.render({
+      elem: '#endDate' //指定元素
+    });
+
+    $('#openAddModel').on('click', function () {
+      laydate.render({
+        elem: '#createDate'
+      })
+      layer.open({
+        type: 1,
+        area: ['500px', '350px'],
+        content: $('#addModel'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+        shade: 0,
+        btn: ['提交', '重置'],
+        btn1: function (index, layero) {
+          var kk = $("#username").val();
+          alert(kk);
+        },
+        btn2: function (index, layero) {
+          // $("createPerson").val('')
+          // $("createDate").val('')
+          // $("customerName").val('')
+          // $("customerPhone").val('')
+          // $("orderNumber").val('')
+          // $("totalMoney").val('')
+          // $("deposit").val('')
+          // $("createPerson").val('')
+          // $("createPerson").val('')
+          return false;
+        }
+      });
+    })
+  });
+</script>

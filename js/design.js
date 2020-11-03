@@ -103,6 +103,8 @@ DesignFrame = function () {
         this.windowFans.push(winfan1);
         this.windowFans.push(winfan2);
 
+        //修改尺寸标注
+
     }
 
     this.addJoint = function (joint) {
