@@ -21,6 +21,8 @@ DesignFrame = function () {
     this.mullions = [];
     //拼接数组
     this.joints = [];
+    //尺寸标注数组
+    this.dimensions = [];
 
     this.init = function (x, y, wid, hei) {
         this.frame.out_begin.x = x;

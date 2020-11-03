@@ -36,9 +36,8 @@ Dimensioning = function () {
     this.end = new Point();
     this.length = 0;
     this.span = 15;
+    this.type = 1; //1:hor 2:ver
 };
-
-
 
 //玻璃
 Glass = function () {
