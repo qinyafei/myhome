@@ -41,6 +41,22 @@ DesignFrame = function () {
         winfan.innerFan.end.x = this.frame.in_end.x;
         winfan.innerFan.end.y = this.frame.in_end.y;
         this.windowFans.push(winfan);
+
+        dimen = new Dimensioning();
+        dimen.begin.x = x;
+        dimen.begin.y = this.frame.out_end.y;
+        dimen.end.x = this.frame.out_end.x;
+        dimen.end.y = this.frame.out_end.y;
+        dimen.type = 1;
+        this.dimensions.push(dimen);
+
+        dimen = new Dimensioning();
+        dimen.begin.x = this.frame.out_end.x;
+        dimen.begin.y = y;
+        dimen.end.x = this.frame.out_end.x;
+        dimen.end.y = this.frame.out_end.y;
+        dimen.type = 2;
+        this.dimensions.push(dimen);
     };
 
     this.addMullion = function (x, y, type) {
@@ -66,6 +82,14 @@ DesignFrame = function () {
             winfan2.innerFan.begin.y = y + frame_span / 2;
             winfan2.innerFan.end.x = horpt[1] - frame_span;
             winfan2.innerFan.end.y = verpt[1] - frame_span;
+
+            dimen = new Dimensioning();
+            dimen.begin.x = horpt[0];
+            dimen.begin.y = y;
+            dimen.end.x = horpt[1];
+            dimen.end.y = y;
+            dimen.type = 1;
+            this.dimensions.push(dimen);
         }
 
         //竖梃分割
@@ -89,6 +113,14 @@ DesignFrame = function () {
             winfan2.innerFan.end.y = verpt[1] - frame_span;
 
             this.mullions.push(mul);
+   
+            dimen = new Dimensioning();
+            dimen.begin.x = horpt[0];
+            dimen.begin.y = y;
+            dimen.end.x = horpt[1];
+            dimen.end.y = y;
+            dimen.type = 2;
+            this.dimensions.push(dimen);
         }
 
         //删除原fan
@@ -102,8 +134,6 @@ DesignFrame = function () {
         //最后添加新fan
         this.windowFans.push(winfan1);
         this.windowFans.push(winfan2);
-
-        //修改尺寸标注
 
     }
 
