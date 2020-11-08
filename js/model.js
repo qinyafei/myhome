@@ -31,7 +31,7 @@ Joint = function () {
 
 
 //尺寸标注
-Dimensioning = function () {
+Dimension = function () {
     this.begin = new Point();
     this.end = new Point();
     this.length = 0;

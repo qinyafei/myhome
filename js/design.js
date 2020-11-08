@@ -21,6 +21,9 @@ DesignFrame = function () {
     this.mullions = [];
     //拼接数组
     this.joints = [];
+    //外框尺寸标注
+    this.hroFrameDimen = new Dimension();
+    this.verFrameDimen = new Dimension();
     //尺寸标注数组
     this.dimensions = [];
 
@@ -42,22 +45,20 @@ DesignFrame = function () {
         winfan.innerFan.end.y = this.frame.in_end.y;
         this.windowFans.push(winfan);
 
-        dimen = new Dimensioning();
-        dimen.begin.x = x;
-        dimen.begin.y = this.frame.out_end.y;
-        dimen.end.x = this.frame.out_end.x;
-        dimen.end.y = this.frame.out_end.y;
-        dimen.type = 1;
-        this.dimensions.push(dimen);
+        this.hroFrameDimen.begin.x = x;
+        this.hroFrameDimen.begin.y = this.frame.out_end.y;
+        this.hroFrameDimen.end.x = this.frame.out_end.x;
+        this.hroFrameDimen.end.y = this.frame.out_end.y;
+        this.hroFrameDimen.type = 1;
 
-        dimen = new Dimensioning();
-        dimen.begin.x = this.frame.out_end.x;
-        dimen.begin.y = y;
-        dimen.end.x = this.frame.out_end.x;
-        dimen.end.y = this.frame.out_end.y;
-        dimen.type = 2;
-        this.dimensions.push(dimen);
+        this.verFrameDimen.begin.x = this.frame.out_end.x;
+        this.verFrameDimen.begin.y = y;
+        this.verFrameDimen.end.x = this.frame.out_end.x;
+        this.verFrameDimen.end.y = this.frame.out_end.y;
+        this.verFrameDimen.type = 2;
     };
+
+    
 
     this.addMullion = function (x, y, type) {
         var winfan1, winfan2;
@@ -83,7 +84,7 @@ DesignFrame = function () {
             winfan2.innerFan.end.x = horpt[1] - frame_span;
             winfan2.innerFan.end.y = verpt[1] - frame_span;
 
-            dimen = new Dimensioning();
+            dimen = new Dimension();
             dimen.begin.x = horpt[0];
             dimen.begin.y = y;
             dimen.end.x = horpt[1];
@@ -114,7 +115,7 @@ DesignFrame = function () {
 
             this.mullions.push(mul);
    
-            dimen = new Dimensioning();
+            dimen = new Dimension();
             dimen.begin.x = horpt[0];
             dimen.begin.y = y;
             dimen.end.x = horpt[1];
@@ -148,6 +149,18 @@ DesignFrame = function () {
     this.delJoint = function (joint) {
 
     };
+
+    /**
+     * 绘制尺寸标注
+    */
+   this.drawDimension = function () {
+       //绘制外框dimension
+       draw_hdimensioning(this.hroFrameDimen);
+       draw_vdimensioning(this.verFrameDimen);
+
+       //其他内区间尺寸
+       
+   };
 
     /**
      * 绘制

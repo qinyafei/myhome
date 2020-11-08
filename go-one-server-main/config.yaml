@@ -1,0 +1,48 @@
+# 程序配置
+app:
+  # jwt签名秘钥，务必更改
+  jwtSecret: 3bf6a2bf959f57a946139521a75acf0d
+
+# 服务配置
+server:
+  # 开发模式 debug,release,test
+  runMode: debug
+  # 超时时间/单位s
+  readTimeout: 60
+  writeTimeout: 60
+  # 端口
+  httpPort: 9112
+
+# 日志配置
+logConfig:
+  # 日志记录模式 fatal,panic,dpanic,error,warn,info,debug
+  level: info
+  # 日志是否记录到文件 true,false
+  isFile: false
+  # MaxSize 是日志文件在获取之前的最大大小（以兆字节为单位）默认为 100 MB
+  maxSize: 100
+  # MaxAge 是保留旧日志文件的最大天数
+  maxAge: 7
+  # MaxBackups 是要保留的最大旧日志文件数
+  maxBackups: 10
+
+# mysql配置
+# 配置内容参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html
+mysql:
+  # 连接驱动
+  dsn: root:123456@tcp(127.0.0.1:3306)/db_go_one_server?charset=utf8mb4&parseTime=True&loc=Local
+  # 空闲连接池中连接的最大数量
+  maxIdle: 10
+  # 打开数据库连接的最大数量
+  maxOpen: 10
+  # 连接可复用的最大时间/单位分钟
+  maxLifetime: 60
+  # 数据库日志模式 silent,error,warn,info
+  logMode: info
+
+# Redis配置
+redis:
+  # 连接地址
+  addr: 127.0.0.1:6379
+  # 密码,默认为空
+  password:
