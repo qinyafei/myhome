@@ -29,16 +29,6 @@ Joint = function () {
     this.type = 1;//1:hor 2:ver
 };
 
-
-//尺寸标注
-Dimension = function () {
-    this.begin = new Point();
-    this.end = new Point();
-    this.length = 0;
-    this.span = 15;
-    this.type = 1; //1:hor 2:ver
-};
-
 //玻璃
 Glass = function () {
    this.begin = new Point();

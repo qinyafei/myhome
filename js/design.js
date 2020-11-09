@@ -50,15 +50,19 @@ DesignFrame = function () {
         this.hroFrameDimen.end.x = this.frame.out_end.x;
         this.hroFrameDimen.end.y = this.frame.out_end.y;
         this.hroFrameDimen.type = 1;
+        this.hroFrameDimen.length = 1600;
+        this.hroFrameDimen.span = 25;
 
         this.verFrameDimen.begin.x = this.frame.out_end.x;
         this.verFrameDimen.begin.y = y;
         this.verFrameDimen.end.x = this.frame.out_end.x;
         this.verFrameDimen.end.y = this.frame.out_end.y;
         this.verFrameDimen.type = 2;
+        this.verFrameDimen.length = 1600;
+        this.verFrameDimen.span = 25;
     };
 
-    
+
 
     this.addMullion = function (x, y, type) {
         var winfan1, winfan2;
@@ -83,14 +87,6 @@ DesignFrame = function () {
             winfan2.innerFan.begin.y = y + frame_span / 2;
             winfan2.innerFan.end.x = horpt[1] - frame_span;
             winfan2.innerFan.end.y = verpt[1] - frame_span;
-
-            dimen = new Dimension();
-            dimen.begin.x = horpt[0];
-            dimen.begin.y = y;
-            dimen.end.x = horpt[1];
-            dimen.end.y = y;
-            dimen.type = 1;
-            this.dimensions.push(dimen);
         }
 
         //竖梃分割
@@ -98,6 +94,7 @@ DesignFrame = function () {
             verpt = this.probeVerEdge(x, y);
             mul = new Mullion();
             mul.init(x, verpt[0], x, verpt[1], type);
+            this.mullions.push(mul);
 
             horpt = this.probeHorEdge(x, y);
 
@@ -112,16 +109,6 @@ DesignFrame = function () {
             winfan2.innerFan.begin.y = verpt[0] + frame_span;
             winfan2.innerFan.end.x = horpt[1] - frame_span;
             winfan2.innerFan.end.y = verpt[1] - frame_span;
-
-            this.mullions.push(mul);
-   
-            dimen = new Dimension();
-            dimen.begin.x = horpt[0];
-            dimen.begin.y = y;
-            dimen.end.x = horpt[1];
-            dimen.end.y = y;
-            dimen.type = 2;
-            this.dimensions.push(dimen);
         }
 
         //删除原fan
@@ -136,6 +123,7 @@ DesignFrame = function () {
         this.windowFans.push(winfan1);
         this.windowFans.push(winfan2);
 
+        this.reCalculateDimension();
     }
 
     this.addJoint = function (joint) {
@@ -153,14 +141,112 @@ DesignFrame = function () {
     /**
      * 绘制尺寸标注
     */
-   this.drawDimension = function () {
-       //绘制外框dimension
-       draw_hdimensioning(this.hroFrameDimen);
-       draw_vdimensioning(this.verFrameDimen);
+    this.drawDimension = function () {
+        //绘制外框dimension
+        this.hroFrameDimen.draw();
+        this.verFrameDimen.draw();
 
-       //其他内区间尺寸
-       
-   };
+        //其他内区间尺寸
+        this.dimensions.map(function (value, index) {
+            value.draw();
+        });
+    };
+
+    /**
+     * check 重新check尺寸标注
+    */
+    this.reCalculateDimension = function () {
+        //先清空
+        this.dimensions.splice(0, this.dimensions.length);
+
+        //水平尺寸标注的X是frame.out_end.x
+        //垂直尺寸标注的y是frame.out_end.y
+        //只存储标注点的y值
+        horSpan = [];
+        //存储标注点的x值
+        verSpan = [];
+        this.mullions.map(function (value, index) {
+            if (value.type == 1) {
+                horSpan.push(value.end.y);
+            } else if (value.type == 2) {
+                verSpan.push(value.end.x);
+            }
+        });
+
+        horSpan.sort(function (a, b) { return a - b });
+        verSpan.sort(function (a, b) { return a - b });
+
+        for (idx = 0; idx < horSpan.length; idx++) {
+            if (idx == 0) {
+                dimen = new Dimension();
+                dimen.begin.x = this.frame.out_end.x;
+                dimen.begin.y = this.frame.out_begin.y;
+                dimen.end.x = this.frame.out_end.x;
+                dimen.end.y = horSpan[idx];
+                dimen.type = 2;
+                dimen.length = horSpan[idx] - this.frame.out_begin.y;
+                this.dimensions.push(dimen);
+            }
+
+            if (idx == horSpan.length - 1) {
+                dimen = new Dimension();
+                dimen.begin.x = this.frame.out_end.x;
+                dimen.begin.y = horSpan[idx];
+                dimen.end.x = this.frame.out_end.x;
+                dimen.end.y = this.frame.out_end.y;
+                dimen.type = 2;
+                dimen.length = horSpan[idx] - this.frame.out_begin.y;
+                this.dimensions.push(dimen);
+            }
+
+            if (idx != 0 && idx != horSpan.length - 1) {
+                dimen = new Dimension();
+                dimen.begin.x = this.frame.out_end.x;
+                dimen.begin.y = horSpan[idx];
+                dimen.end.x = this.frame.out_end.x;
+                dimen.end.y = horSpan[idx + 1];
+                dimen.type = 2;
+                dimen.length = horSpan[idx + 1] - horSpan[idx];
+                this.dimensions.push(dimen);
+            }
+        }
+
+        for (idx = 0; idx < verSpan.length; idx++) {
+            if (idx == 0) {
+                dimen = new Dimension();
+                dimen.begin.x = this.frame.out_begin.x;
+                dimen.begin.y = this.frame.out_end.y;
+                dimen.end.x = verSpan[idx];
+                dimen.end.y = this.frame.out_end.y;
+                dimen.type = 1;
+                dimen.length = verSpan[idx] - this.frame.out_begin.x;
+                this.dimensions.push(dimen);
+            }
+
+            if (idx == horSpan.length - 1) {
+                dimen = new Dimension();
+                dimen.begin.x = verSpan[idx];
+                dimen.begin.y = this.frame.out_end.y;
+                dimen.end.x = this.frame.out_end.x;
+                dimen.end.y = this.frame.out_end.y;
+                dimen.type = 1;
+                dimen.length = this.frame.out_end.x - verSpan[idx];
+                this.dimensions.push(dimen);
+            }
+
+            if (idx != 0 && idx != horSpan.length - 1) {
+                dimen = new Dimension();
+                dimen.begin.x = verSpan[idx];
+                dimen.begin.y = this.frame.out_end.y;
+                dimen.end.x = verSpan[idx + 1];
+                dimen.end.y = this.frame.out_end.y;
+                dimen.type = 1;
+                dimen.length = verSpan[idx + 1] - verSpan[idx];
+                this.dimensions.push(dimen);
+            }
+        }
+
+    };
 
     /**
      * 绘制
@@ -169,27 +255,8 @@ DesignFrame = function () {
         //draw init windows
         this.frame.draw();
 
-        //画水平尺寸标识
-        dimen = new Dimensioning();
-        dimen.begin.x = this.frame.out_begin.x;
-        dimen.begin.y = this.frame.out_end.y;
-        dimen.end.x = this.frame.out_end.x;
-        dimen.end.y = this.frame.out_end.y;
-        dimen.length = 1600;
-        dimen.span = 20;
-
-        draw_hdimensioning(dimen);
-
-        //画垂直尺寸标识
-        dimen2 = new Dimensioning();
-        dimen2.begin.x = this.frame.out_end.x;
-        dimen2.begin.y = this.frame.out_begin.y;
-        dimen2.end.x = this.frame.out_end.x;
-        dimen2.end.y = this.frame.out_end.y;
-        dimen2.length = 1600;
-        dimen2.span = 10;
-
-        draw_vdimensioning(dimen2);
+        //画水平/垂直尺寸标识
+        this.drawDimension();
 
         this.mullions.map(function (value, index) {
             value.draw();

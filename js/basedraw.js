@@ -18,6 +18,8 @@ function draw_line(x0, y0, x1, y1) {
     });
 
     zr.add(line);
+
+    return line;
 }
 
 /**
@@ -26,6 +28,8 @@ function draw_line(x0, y0, x1, y1) {
 */
 function draw_arrow(fromx, fromy, tox, toy, theta, headlen) {
     color = '#000';
+
+    zrobj = [];
 
     // 计算各角度和对应的P2,P3坐标
     var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
@@ -36,15 +40,21 @@ function draw_arrow(fromx, fromy, tox, toy, theta, headlen) {
         botX = headlen * Math.cos(angle2),
         botY = headlen * Math.sin(angle2);
 
-    draw_line(fromX, fromY, toX, toY);
+    line = draw_line(fromX, fromY, toX, toY);
+    zrobj.push(line);
+
 
     var arrowX = toX + topX,
         arrowY = toY + topY;
-    draw_line(arrowX, arrowY, toX, toY);
+    line2 = draw_line(arrowX, arrowY, toX, toY);
+    zrobj.push(line2);
 
     arrowX = toX + botX;
     arrowY = toY + botY;
-    draw_line(toX, toY, arrowX, arrowY);
+    line3 = draw_line(toX, toY, arrowX, arrowY);
+    zrobj.push(line3);
+
+    return zrobj;
 }
 
 
@@ -66,6 +76,8 @@ function draw_rect(x, y, width, height) {
     });
 
     zr.add(obj);
+
+    return obj;
 }
 
 /**
@@ -105,4 +117,6 @@ function draw_text(str, x, y) {
         }
     });
     zr.add(countText);
+
+    return countText;
 }
