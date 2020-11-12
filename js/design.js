@@ -186,9 +186,7 @@ DesignFrame = function () {
                 dimen.type = 2;
                 dimen.length = horSpan[idx] - this.frame.out_begin.y;
                 this.dimensions.push(dimen);
-            }
-
-            if (idx == horSpan.length - 1) {
+            } else if (idx == horSpan.length - 1) {
                 dimen = new Dimension();
                 dimen.begin.x = this.frame.out_end.x;
                 dimen.begin.y = horSpan[idx];
@@ -197,9 +195,7 @@ DesignFrame = function () {
                 dimen.type = 2;
                 dimen.length = horSpan[idx] - this.frame.out_begin.y;
                 this.dimensions.push(dimen);
-            }
-
-            if (idx != 0 && idx != horSpan.length - 1) {
+            } else {
                 dimen = new Dimension();
                 dimen.begin.x = this.frame.out_end.x;
                 dimen.begin.y = horSpan[idx];
@@ -221,9 +217,7 @@ DesignFrame = function () {
                 dimen.type = 1;
                 dimen.length = verSpan[idx] - this.frame.out_begin.x;
                 this.dimensions.push(dimen);
-            }
-
-            if (idx == horSpan.length - 1) {
+            } else if (idx == horSpan.length - 1) {
                 dimen = new Dimension();
                 dimen.begin.x = verSpan[idx];
                 dimen.begin.y = this.frame.out_end.y;
@@ -232,9 +226,7 @@ DesignFrame = function () {
                 dimen.type = 1;
                 dimen.length = this.frame.out_end.x - verSpan[idx];
                 this.dimensions.push(dimen);
-            }
-
-            if (idx != 0 && idx != horSpan.length - 1) {
+            } else {
                 dimen = new Dimension();
                 dimen.begin.x = verSpan[idx];
                 dimen.begin.y = this.frame.out_end.y;
