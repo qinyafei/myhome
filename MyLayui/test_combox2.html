@@ -1,0 +1,43 @@
+<!--
+ * @File: 
+ * @Brief: 
+ * @Version: 1.0.0
+ * @Author: xxx
+ * @Date: 2020-11-12 19:21:14
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>下拉框</title>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+        var cityValue=new Array("001","002","003");
+        var cityLabel=new Array("北京","广州","重庆");
+       window.onload=function(){
+          document.getElementById("loadBut");
+          addEventListener("click",handleOption,false);
+       }
+       function handleOption(){
+           //处理下拉菜单中的所有选项内容
+           var cityElement=document.getElementById("city");
+           //清空下拉列表项，设置保留的个数
+         cityElement.length=1;
+           for (var i = 0; i < cityValue.length; i++) {
+                var optionElement=document.createElement("option");//创建option元素
+                optionElement.setAttribute("value",cityValue[i]);
+                optionElement.appendChild(document.createTextNode(cityLabel[i]));
+                cityElement.appendChild(optionElement);
+       }
+   }
+    </script>
+</head>
+<body>
+  <div id="myDiv">
+       请选择你所在的城市：<select id="city">
+                              <option value="0">
+                                  ======选择城市=======
+                              </option>
+                           </select>
+ <button id="loadBut">读取城市信息</button>                          
+  </div>
+</body>

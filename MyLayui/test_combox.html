@@ -1,0 +1,82 @@
+<!--
+ * @File: 
+ * @Brief: 
+ * @Version: 1.0.0
+ * @Author: xxx
+ * @Date: 2020-11-12 19:20:46
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>下拉框</title>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+        var cityValue=new Array("001","002","003");
+        var cityLabel=new Array("北京","广州","重庆");
+       window.onload=function(){
+          document.getElementById("ch").
+          addEventListener("dblclick",changeOption,false);
+          document.getElementById("inst").
+          addEventListener("dblclick",changeOption2,false);
+ 
+       }
+       function changeOption2(){
+         //如果要想取得当前的操作选项，使用this描述
+         var value=this.value;
+         var label;//保存标签结果
+         //要找到发出选项的元素内容
+        var optionSelected=getElement("inst",value);
+        label=optionSelected.firstChild.nodeValue;
+           //如果可以取出标签了，那么表示可以向另外一个下拉菜单设置选项内容了
+           append("ch",value,label);
+           deleteElement("inst",optionSelected);
+       }
+       function changeOption(){
+         //如果要想取得当前的操作选项，使用this描述
+         var value=this.value;
+         var label;//保存标签结果
+         //要找到发出选项的元素内容
+        var optionSelected=getElement("ch",value);
+        label=optionSelected.firstChild.nodeValue;
+           //如果可以取出标签了，那么表示可以向另外一个下拉菜单设置选项内容了
+           append("inst",value,label);
+           deleteElement("ch",optionSelected);
+       }
+       function deleteElement(eleName,option){
+//删除掉选项的内容
+         document.getElementById(eleName).removeChild(option);
+       }
+       //根据下拉列表取出指定的option对象
+       function getElement(eleName,value){
+           var optionEle=document.getElementById(eleName).getElementsByTagName("option");
+         //依次比较每一个option元素的内容目的是取出标签内容
+         for (var i = 0; i < optionEle.length; i++)
+          {
+          if (optionEle[i].getAttribute("value")==value) {//表示当前选中的内容
+             return optionEle[i];
+ 
+          }
+         }
+       }
+       function append(eleName,value,label){
+        var optionElement=document.createElement("option");
+        optionElement.setAttribute("value",value);
+        optionElement.appendChild(document.createTextNode(label));
+        document.getElementById(eleName).appendChild(optionElement);
+       }
+    </script>
+</head>
+<body>
+  <div id="firstDiv">
+       你的兴趣：<select id="ch" multiple size="10">
+                       <option value="100">唱歌</option>
+                  <option value="101">跳舞</option>
+                  <option value="102">打架</option>
+                  <option value="103">玩游戏</option>
+                           </select>                
+  </div>
+  <div id="secondDiv">
+       选择好的兴趣：<select id="inst" mutiple size="10"></select>
+  </div>
+</body>
+</html>
