@@ -53,7 +53,10 @@ window.onload = function () {
                     objs[i].draggable = true;
                 }
             }
-        } else {
+        } else if (curType == "winfan_scheme" || curType == "select") {
+            design.setWinFanScheme(1);
+        }
+        else {
             var objs = zr.storage._roots;
             if (objs) {
                 for (let i = 0; i < objs.length; i++) {

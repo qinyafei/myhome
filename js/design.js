@@ -26,6 +26,8 @@ DesignFrame = function () {
     this.verFrameDimen = new Dimension();
     //尺寸标注数组
     this.dimensions = [];
+    //当前选中的组件
+    this.curObj;
 
     this.init = function (x, y, wid, hei) {
         this.frame.out_begin.x = x;
@@ -51,7 +53,7 @@ DesignFrame = function () {
         this.hroFrameDimen.end.y = this.frame.out_end.y;
         this.hroFrameDimen.type = 1;
         this.hroFrameDimen.length = 1600;
-        this.hroFrameDimen.span = 25;
+        this.hroFrameDimen.span = 30;
 
         this.verFrameDimen.begin.x = this.frame.out_end.x;
         this.verFrameDimen.begin.y = y;
@@ -59,7 +61,7 @@ DesignFrame = function () {
         this.verFrameDimen.end.y = this.frame.out_end.y;
         this.verFrameDimen.type = 2;
         this.verFrameDimen.length = 1600;
-        this.verFrameDimen.span = 25;
+        this.verFrameDimen.span = 30;
     };
 
 
@@ -137,6 +139,12 @@ DesignFrame = function () {
     this.delJoint = function (joint) {
 
     };
+
+    this.setWinFanScheme = function (type) {
+        if (this.curObj != undefined) {
+            this.curObj.setFanScheme(type);
+        }
+    }
 
     /**
      * 绘制尺寸标注
@@ -376,16 +384,19 @@ DesignFrame = function () {
         isIn = false;
         this.mullions.map(function (value, index) {
             if (value.ptIn(x, y)) {
+                this.curObj = value;
                 return;
             }
         });
 
         if (this.frame.ptIn(x, y)) {
+            this.curObj = this.frame;
             return;
         }
 
         this.windowFans.map(function (value, index) {
             if (value.ptIn(x, y) == true) {
+                this.curObj = value;
                 return;
             }
         });

@@ -10,7 +10,7 @@ Dimension = function () {
     this.begin = new Point();
     this.end = new Point();
     this.length = 0;
-    this.span = 15;
+    this.span = 10;
     this.type = 1; //1:hor 2:ver
 
 
@@ -66,7 +66,7 @@ Dimension = function () {
             }
 
             //绘制字符
-            obj3 = draw_text(this.length, fromX, fromY);
+            obj3 = draw_text(this.length, fromX, fromY+this.span/2);
             this.saveZRObj(obj3);
         } else {
             //垂直
@@ -96,7 +96,7 @@ Dimension = function () {
                 this.saveZRObj(objarr2[i]);
             }
             //绘制字符
-            obj3 = draw_text(this.length, fromX, fromY - textlen);
+            obj3 = draw_text(this.length, fromX-this.span/2, fromY - textlen);
             this.saveZRObj(obj3);
         }
     };
