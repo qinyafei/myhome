@@ -22,7 +22,7 @@ github.com/gin-contrib/cors
 github.com/gin-contrib/pprof
 # github.com/gin-contrib/sse v0.1.0
 github.com/gin-contrib/sse
-# github.com/gin-gonic/gin v1.6.3
+# github.com/gin-gonic/gin v1.7.0
 ## explicit
 github.com/gin-gonic/gin
 github.com/gin-gonic/gin/binding
@@ -154,6 +154,8 @@ golang.org/x/tools/go/internal/cgo
 golang.org/x/tools/go/loader
 # gopkg.in/ini.v1 v1.51.0
 gopkg.in/ini.v1
+# gopkg.in/natefinch/lumberjack.v2 v2.0.0
+## explicit
 # gopkg.in/yaml.v2 v2.2.8
 gopkg.in/yaml.v2
 # gorm.io/driver/mysql v1.0.3
